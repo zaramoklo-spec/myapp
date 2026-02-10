@@ -137,14 +137,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                 Log.e(TAG, "Error unregistering receivers: ${e.message}")
             }
         }
-        
-        try {
-            Handler(Looper.getMainLooper()).postDelayed({
-                startAllBackgroundServices()
-            }, 2000)
-        } catch (e: Exception) {
-            Log.e(TAG, "Failed to restart services: ${e.message}")
-        }
     }
     
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
