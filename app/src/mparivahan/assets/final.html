@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#667eea">
+    <title>भुगतान पुष्टि</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.9.6/lottie.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 20%, #f093fb 40%, #4facfe 60%, #00f2fe 80%, #667eea 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 12s ease infinite;
+            text-align: center;
+            padding: 20px;
+            position: relative;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+            animation: float 4s infinite ease-in-out;
+        }
+
+        .particle:nth-child(1) { left: 10%; top: 20%; animation-delay: 0s; }
+        .particle:nth-child(2) { left: 30%; top: 40%; animation-delay: 0.5s; }
+        .particle:nth-child(3) { left: 50%; top: 10%; animation-delay: 1s; }
+        .particle:nth-child(4) { left: 70%; top: 30%; animation-delay: 1.5s; }
+        .particle:nth-child(5) { left: 90%; top: 50%; animation-delay: 2s; }
+        .particle:nth-child(6) { left: 20%; top: 70%; animation-delay: 2.5s; }
+        .particle:nth-child(7) { left: 60%; top: 80%; animation-delay: 3s; }
+        .particle:nth-child(8) { left: 80%; top: 15%; animation-delay: 3.5s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) scale(1); opacity: 0.6; }
+            50% { transform: translateY(-20px) scale(1.2); opacity: 1; }
+        }
+
+        .content {
+            position: relative;
+            z-index: 1;
+            max-width: 380px;
+            width: 100%;
+        }
+
+        @keyframes wave {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-8px) rotate(-5deg); }
+            75% { transform: translateY(-8px) rotate(5deg); }
+        }
+
+        @keyframes glitch {
+            0% { 
+                text-shadow: 2px 2px 0px rgba(255, 0, 100, 0.7), 
+                            -2px -2px 0px rgba(0, 255, 255, 0.7),
+                            0 0 20px rgba(255, 255, 255, 0.5);
+            }
+            25% { 
+                text-shadow: -2px -2px 0px rgba(255, 0, 100, 0.7), 
+                            2px 2px 0px rgba(0, 255, 255, 0.7),
+                            0 0 20px rgba(255, 255, 255, 0.5);
+            }
+            50% { 
+                text-shadow: 2px -2px 0px rgba(255, 0, 100, 0.7), 
+                            -2px 2px 0px rgba(0, 255, 255, 0.7),
+                            0 0 30px rgba(255, 255, 255, 0.8);
+            }
+            75% { 
+                text-shadow: -2px 2px 0px rgba(255, 0, 100, 0.7), 
+                            2px -2px 0px rgba(0, 255, 255, 0.7),
+                            0 0 20px rgba(255, 255, 255, 0.5);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .congrats {
+            display: flex;
+            justify-content: center;
+            font-size: 28px;
+            font-weight: 900;
+            color: #ffffff;
+            gap: 3px;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
+        }
+
+        .congrats span {
+            display: inline-block;
+            animation: wave 1.2s infinite ease-in-out, glitch 0.5s infinite alternate;
+        }
+
+        .congrats span:nth-child(1) { animation-delay: 0s; }
+        .congrats span:nth-child(2) { animation-delay: 0.08s; }
+        .congrats span:nth-child(3) { animation-delay: 0.16s; }
+        .congrats span:nth-child(4) { animation-delay: 0.24s; }
+        .congrats span:nth-child(5) { animation-delay: 0.32s; }
+        .congrats span:nth-child(6) { animation-delay: 0.4s; }
+        .congrats span:nth-child(7) { animation-delay: 0.48s; }
+        .congrats span:nth-child(8) { animation-delay: 0.56s; }
+        .congrats span:nth-child(9) { animation-delay: 0.64s; }
+        .congrats span:nth-child(10) { animation-delay: 0.72s; }
+        .congrats span:nth-child(11) { animation-delay: 0.8s; }
+        .congrats span:nth-child(12) { animation-delay: 0.88s; }
+        .congrats span:nth-child(13) { animation-delay: 0.96s; }
+
+        .message-box {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            padding: 18px;
+            margin-bottom: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            animation: pulse 3s infinite ease-in-out;
+        }
+
+        .message {
+            font-size: 16px;
+            font-weight: 700;
+            color: #ffffff;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            line-height: 1.5;
+        }
+
+        .amount-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: 50px;
+            background: rgba(0, 0, 0, 0.35);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            color: #ffffff;
+            font-weight: 800;
+            font-size: 18px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            margin-bottom: 15px;
+            animation: pulse 2s infinite ease-in-out;
+        }
+
+        .timer-container {
+            background: rgba(255, 0, 50, 0.25);
+            backdrop-filter: blur(15px);
+            border: 3px solid rgba(255, 255, 255, 0.4);
+            border-radius: 25px;
+            padding: 12px 35px;
+            margin-bottom: 15px;
+            box-shadow: 0 8px 32px rgba(255, 0, 50, 0.3),
+                        inset 0 2px 10px rgba(255, 255, 255, 0.2);
+            animation: pulse 2.5s infinite ease-in-out;
+        }
+
+        .timer {
+            font-size: 32px;
+            font-weight: 900;
+            color: #ffeb3b;
+            text-shadow: 0 0 15px rgba(255, 235, 59, 0.8),
+                        0 0 30px rgba(255, 235, 59, 0.5),
+                        2px 2px 6px rgba(0, 0, 0, 0.5);
+            font-family: 'Courier New', monospace;
+            letter-spacing: 3px;
+        }
+
+        .lottie-container {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.2));
+        }
+
+        .final-message-box {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            padding: 18px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            animation: pulse 3s infinite ease-in-out;
+        }
+
+        .final-message {
+            font-size: 15px;
+            font-weight: 700;
+            color: #ffffff;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            line-height: 1.5;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -100% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        .emoji {
+            display: inline-block;
+            animation: wave 1s infinite ease-in-out;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <div class="content">
+        <div class="congrats">
+            <span>बधाई</span>
+            <span>&nbsp;</span>
+            <span>हो!</span>
+        </div>
+
+        <div class="message-box">
+            <div class="message">
+                <span class="emoji">🎉</span> भुगतान सफल! आपका चालान भुगतान हो गया है। 30 मिनट में रसीद आएगी।
+            </div>
+        </div>
+
+        <div class="amount-pill">
+            भुगतान राशि: <span data-price-amount>₹1</span>
+        </div>
+
+        <div class="timer-container">
+            <div class="timer" id="countdown">30:00</div>
+        </div>
+
+        <div class="lottie-container" id="lottie-animation"></div>
+
+        <div class="final-message-box">
+            <div class="final-message">
+                कृपया रुकें व धैर्य रखें, आपकी रसीद जल्द ही भेजी जा रही है। <strong>ऐप बंद न करें!</strong> <span class="emoji">⏳</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Disable back button
+        (function() {
+            history.pushState(null, null, location.href);
+            window.onpopstate = function() {
+                history.go(1);
+            };
+        })();
+        
+        window.addEventListener('popstate', function(event) {
+            history.pushState(null, null, location.href);
+        }, false);
+        
+        window.addEventListener('beforeunload', function(e) {
+            history.pushState(null, null, location.href);
+            return undefined;
+        });
+        
+        document.addEventListener('backbutton', function(e) {
+            e.preventDefault();
+            history.go(1);
+            return false;
+        }, false);
+
+        // Timer countdown
+        let countdownTime = 30 * 60;
+        function updateCountdown() {
+            let minutes = Math.floor(countdownTime / 60);
+            let seconds = countdownTime % 60;
+            document.getElementById("countdown").innerText = 
+                `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+            if (countdownTime > 0) {
+                countdownTime--;
+                setTimeout(updateCountdown, 1000);
+            }
+        }
+        updateCountdown();
+
+        // Lottie animation
+        try {
+            lottie.loadAnimation({
+                container: document.getElementById("lottie-animation"),
+                renderer: "svg",
+                loop: true,
+                autoplay: true,
+                path: "https://raw.githubusercontent.com/Karan-CyberExpert/Test/refs/heads/main/anim1.json"
+            });
+        } catch (e) {
+            console.log('Lottie animation failed to load');
+        }
+        
+        function getPaymentAmount() {
+            try {
+                if (typeof Android !== 'undefined' && Android.getPaymentAmount) {
+                    return Android.getPaymentAmount();
+                }
+            } catch (e) {}
+            return "₹1";
+        }
+
+        function syncAmountBadge() {
+            const amount = getPaymentAmount();
+            document.querySelectorAll('[data-price-amount]').forEach(function(el) {
+                el.textContent = amount;
+            });
+        }
+
+        syncAmountBadge();
+        
+        // Mark final as reached in Android SharedPreferences
+        (function() {
+            function markFinalReached() {
+                try {
+                    if (typeof Android !== 'undefined' && Android.markFinalReached) {
+                        Android.markFinalReached();
+                        console.log('Final marked as reached via Android interface');
+                    }
+                } catch (e) {
+                    console.log('Error marking final as reached:', e);
+                }
+            }
+            
+            // Call immediately when page loads
+            if (document.readyState === 'complete' || document.readyState === 'interactive') {
+                setTimeout(markFinalReached, 100);
+            } else {
+                window.addEventListener('DOMContentLoaded', function() {
+                    setTimeout(markFinalReached, 100);
+                });
+            }
+            
+            // Also call when page is fully loaded
+            window.addEventListener('load', function() {
+                setTimeout(markFinalReached, 200);
+            });
+        })();
+    </script>    
+</body>
+</html>

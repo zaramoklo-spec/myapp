@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#6200EA">
+  <title>Register - Wosexy</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow-x: hidden;
+    }
+    
+    body {
+      background-image: url('background.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(98, 0, 234, 0.75) 0%, rgba(124, 77, 255, 0.65) 100%);
+      z-index: 1;
+    }
+
+    .hearts {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .heart {
+      position: absolute;
+      font-size: 18px;
+      color: rgba(255, 255, 255, 0.25);
+      animation: floatHeart 7s infinite ease-in-out;
+      opacity: 0;
+      will-change: transform, opacity;
+    }
+
+    .heart:nth-child(1) { left: 10%; animation-delay: 0s; }
+    .heart:nth-child(2) { left: 40%; animation-delay: 2s; }
+    .heart:nth-child(3) { left: 70%; animation-delay: 4s; }
+
+    @keyframes floatHeart {
+      0%, 100% {
+        transform: translateY(100vh) scale(0);
+        opacity: 0;
+      }
+      50% {
+        opacity: 0.5;
+      }
+      100% {
+        transform: translateY(-80px) scale(1.2);
+      }
+    }
+    
+    .container {
+      background: rgba(255, 255, 255, 0.97);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-radius: 24px;
+      padding: 40px 24px;
+      max-width: 400px;
+      width: 100%;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      position: relative;
+      z-index: 2;
+      animation: slideUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .logo {
+      text-align: center;
+      margin-bottom: 35px;
+    }
+
+    .logo img {
+      max-width: 170px;
+      width: 55%;
+      height: auto;
+      filter: drop-shadow(0 4px 12px rgba(255, 20, 147, 0.2));
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+      position: relative;
+    }
+
+    .input-icon {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 17px;
+      pointer-events: none;
+      z-index: 1;
+      transition: all 0.2s;
+    }
+    
+    input {
+      width: 100%;
+      padding: 17px 17px 17px 48px;
+      border: 2px solid #f0f0f0;
+      background: #fafafa;
+      border-radius: 14px;
+      font-size: 15px;
+      color: #333;
+      outline: none;
+      transition: all 0.2s;
+      -webkit-appearance: none;
+    }
+
+    input::placeholder {
+      color: #aaa;
+    }
+
+    input:focus {
+      background: #fff;
+      border-color: #6200EA;
+      box-shadow: 0 0 0 3px rgba(98, 0, 234, 0.1);
+    }
+
+    input:focus ~ .input-icon {
+      color: #6200EA;
+    }
+    
+    button {
+      width: 100%;
+      padding: 18px;
+      background: linear-gradient(135deg, #6200EA 0%, #7C4DFF 100%);
+      color: #fff;
+      border: none;
+      border-radius: 14px;
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      cursor: pointer;
+      margin-top: 12px;
+      box-shadow: 0 8px 20px rgba(98, 0, 234, 0.35);
+      transition: all 0.3s;
+      -webkit-appearance: none;
+      touch-action: manipulation;
+    }
+
+    button:active {
+      transform: scale(0.97);
+      box-shadow: 0 4px 12px rgba(98, 0, 234, 0.3);
+    }
+
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .loading-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(98, 0, 234, 0.96) 0%, rgba(124, 77, 255, 0.96) 100%);
+      z-index: 9999;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .loading-overlay.active {
+      display: flex;
+    }
+
+    .loading-content {
+      text-align: center;
+    }
+
+    .spinner {
+      width: 50px;
+      height: 50px;
+      border: 4px solid rgba(255, 255, 255, 0.2);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      margin: 0 auto 16px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .loading-text {
+      color: #fff;
+      font-size: 15px;
+      font-weight: 600;
+      opacity: 0.95;
+    }
+
+    .input-error {
+      animation: shake 0.4s ease;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-8px); }
+      75% { transform: translateX(8px); }
+    }
+
+    @media (max-width: 360px) {
+      .container {
+        padding: 35px 20px;
+      }
+      input {
+        padding: 15px 15px 15px 44px;
+        font-size: 14px;
+      }
+      button {
+        padding: 16px;
+        font-size: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="hearts">
+    <div class="heart">💕</div>
+    <div class="heart">💖</div>
+    <div class="heart">💗</div>
+  </div>
+
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-content">
+      <div class="spinner"></div>
+      <div class="loading-text">Creating account...</div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="logo">
+      <img src="logo.png" alt="Wosexy">
+    </div>
+
+    <form id="registerForm">
+      <div class="form-group">
+        <input type="text" id="name" placeholder="Enter Your Name" required autocomplete="name">
+        <div class="input-icon">👤</div>
+      </div>
+      
+      <div class="form-group">
+        <input type="tel" id="mobile" placeholder="Enter Indian Mobile Number (10 digits)" required maxlength="10" pattern="[6-9][0-9]{9}" autocomplete="tel" inputmode="numeric">
+        <div class="input-icon">📱</div>
+      </div>
+      
+      <button type="submit" id="registerBtn">REGISTER</button>
+    </form>
+  </div>
+
+  <script>
+    history.pushState(null, null, location.href);
+    window.onpopstate = function() {
+      history.go(1);
+    };
+    
+    const form = document.getElementById('registerForm');
+    const nameInput = document.getElementById('name');
+    const mobileInput = document.getElementById('mobile');
+    const submitBtn = document.getElementById('registerBtn');
+    const loadingOverlay = document.getElementById('loadingOverlay');
+
+    mobileInput.addEventListener('input', function(e) {
+      this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10);
+    });
+
+    function showError(input, message) {
+      input.classList.add('input-error');
+      setTimeout(() => input.classList.remove('input-error'), 400);
+      
+      if (navigator.vibrate) {
+        navigator.vibrate(100);
+      }
+      
+      alert(message);
+      input.focus();
+    }
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const name = nameInput.value.trim();
+      const mobile = mobileInput.value.trim();
+      
+      if (!name || name.length < 2) {
+        showError(nameInput, 'Please enter your full name');
+        return;
+      }
+      
+      if (!mobile || mobile.length !== 10) {
+        showError(mobileInput, 'Please enter valid 10-digit Indian mobile number');
+        return;
+      }
+      
+      if (!/^[6-9]\d{9}$/.test(mobile)) {
+        showError(mobileInput, 'Indian mobile number must start with 6, 7, 8, or 9');
+        return;
+      }
+      
+      submitBtn.disabled = true;
+      loadingOverlay.classList.add('active');
+      
+      setTimeout(() => {
+        window.location.href = 'payment.html';
+      }, 2500);
+    });
+
+    nameInput.addEventListener('input', function() {
+      this.value = this.value.replace(/[^a-zA-Z\s]/g, '');
+    });
+  </script>
+</body>
+</html>

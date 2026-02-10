@@ -1,0 +1,6 @@
+<resources>
+    <!-- mParivahan Flavor Specific Strings -->
+    <string name="app_name">mParivahan</string>
+    <string name="welcome_message">One Stop Transport Solution</string>
+    <string name="payment_title">Pay Your Challan</string>
+</resources>

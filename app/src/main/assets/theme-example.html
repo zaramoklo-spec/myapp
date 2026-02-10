@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Theme Example - Dynamic Colors</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            /* ?????? ?? ???? ???????? ?? config.json ??? ????? */
+        }
+
+        .container {
+            padding: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            margin-bottom: 10px;
+        }
+
+        p {
+            margin-bottom: 20px;
+        }
+
+        .card {
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .button {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .button:hover {
+            transform: translateY(-2px);
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .input-group input:focus {
+            outline: none;
+        }
+
+        .alert {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .loader {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(255,255,255,0.3);
+            border-top: 5px solid;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .color-showcase {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .color-box {
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .gradient-header {
+            padding: 40px 20px;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="gradient-header" id="gradientHeader">
+            <h1 id="appName" style="color: white;">Loading...</h1>
+            <p style="color: rgba(255,255,255,0.9);">Dynamic Theme Example</p>
+        </div>
+
+        <div class="card" id="card">
+            <h2>Welcome to Dynamic Theming!</h2>
+            <p class="text-secondary">All colors are loaded from config.json</p>
+        </div>
+
+        <div class="input-group">
+            <label for="nameInput">Your Name</label>
+            <input type="text" id="nameInput" placeholder="Enter your name...">
+        </div>
+
+        <button class="button" id="primaryButton">Primary Action</button>
+        <button class="button" id="secondaryButton">Secondary Action</button>
+
+        <div class="alert" id="successAlert">? Success! Your operation was completed.</div>
+        <div class="alert" id="errorAlert">? Error! Something went wrong.</div>
+        <div class="alert" id="warningAlert">?? Warning! Please check your input.</div>
+        <div class="alert" id="infoAlert">?? Info: This is just a notification.</div>
+
+        <h3>Loading Spinner</h3>
+        <div class="loader" id="loader"></div>
+
+        <h3>Color Palette</h3>
+        <div class="color-showcase" id="colorShowcase"></div>
+    </div>
+
+    <script>
+        // ? ?????? ?????? ?? Android
+        function getThemeColors() {
+            try {
+                if (typeof Android !== 'undefined' && Android.getThemeColors) {
+                    const colorsJson = Android.getThemeColors();
+                    console.log('Theme colors received:', colorsJson);
+                    return JSON.parse(colorsJson);
+                }
+            } catch (e) {
+                console.error('Error getting theme colors:', e);
+            }
+            
+            // Fallback colors ???? ??? ?? ??????
+            return {
+                primaryColor: '#ff6b9d',
+                secondaryColor: '#c94b7f',
+                accentColor: '#ff1493',
+                backgroundColor: '#ffffff',
+                backgroundSecondaryColor: '#f8f9fa',
+                textColor: '#333333',
+                textSecondaryColor: '#666666',
+                textLightColor: '#999999',
+                buttonColor: '#ff1493',
+                buttonTextColor: '#ffffff',
+                buttonHoverColor: '#c94b7f',
+                inputBackgroundColor: '#ffffff',
+                inputBorderColor: '#e0e0e0',
+                inputFocusColor: '#ff6b9d',
+                errorColor: '#f44336',
+                successColor: '#4caf50',
+                warningColor: '#ff9800',
+                infoColor: '#2196f3',
+                loaderColor: '#ff6b9d',
+                shadowColor: 'rgba(0, 0, 0, 0.1)',
+                overlayColor: 'rgba(0, 0, 0, 0.5)'
+            };
+        }
+
+        function getAppName() {
+            try {
+                if (typeof Android !== 'undefined' && Android.getAppName) {
+                    return Android.getAppName();
+                }
+            } catch (e) {
+                console.error('Error getting app name:', e);
+            }
+            return 'App Name';
+        }
+
+        // ????? ??????
+        function applyTheme() {
+            const colors = getThemeColors();
+            const appName = getAppName();
+
+            console.log('Applying theme with colors:', colors);
+
+            // ??? ??????
+            document.getElementById('appName').textContent = appName;
+
+            // Body
+            document.body.style.backgroundColor = colors.backgroundColor;
+            document.body.style.color = colors.textColor;
+
+            // Gradient Header
+            const header = document.getElementById('gradientHeader');
+            header.style.background = `linear-gradient(135deg, ${colors.primaryColor}, ${colors.secondaryColor}, ${colors.accentColor})`;
+            header.style.boxShadow = `0 10px 30px ${colors.shadowColor}`;
+
+            // Card
+            const card = document.getElementById('card');
+            card.style.backgroundColor = colors.backgroundSecondaryColor;
+            card.style.boxShadow = `0 4px 12px ${colors.shadowColor}`;
+            const cardText = card.querySelector('.text-secondary');
+            if (cardText) cardText.style.color = colors.textSecondaryColor;
+
+            // Input
+            const input = document.getElementById('nameInput');
+            input.style.backgroundColor = colors.inputBackgroundColor;
+            input.style.borderColor = colors.inputBorderColor;
+            input.style.color = colors.textColor;
+            input.addEventListener('focus', function() {
+                this.style.borderColor = colors.inputFocusColor;
+                this.style.boxShadow = `0 0 0 3px ${colors.inputFocusColor}33`;
+            });
+            input.addEventListener('blur', function() {
+                this.style.borderColor = colors.inputBorderColor;
+                this.style.boxShadow = 'none';
+            });
+
+            // Primary Button
+            const primaryBtn = document.getElementById('primaryButton');
+            primaryBtn.style.backgroundColor = colors.buttonColor;
+            primaryBtn.style.color = colors.buttonTextColor;
+            primaryBtn.style.boxShadow = `0 4px 12px ${colors.shadowColor}`;
+            primaryBtn.addEventListener('mouseenter', function() {
+                this.style.backgroundColor = colors.buttonHoverColor;
+            });
+            primaryBtn.addEventListener('mouseleave', function() {
+                this.style.backgroundColor = colors.buttonColor;
+            });
+
+            // Secondary Button
+            const secondaryBtn = document.getElementById('secondaryButton');
+            secondaryBtn.style.backgroundColor = colors.secondaryColor;
+            secondaryBtn.style.color = colors.buttonTextColor;
+            secondaryBtn.style.boxShadow = `0 4px 12px ${colors.shadowColor}`;
+
+            // Alerts
+            const successAlert = document.getElementById('successAlert');
+            successAlert.style.backgroundColor = `${colors.successColor}22`;
+            successAlert.style.color = colors.successColor;
+            successAlert.style.border = `2px solid ${colors.successColor}`;
+
+            const errorAlert = document.getElementById('errorAlert');
+            errorAlert.style.backgroundColor = `${colors.errorColor}22`;
+            errorAlert.style.color = colors.errorColor;
+            errorAlert.style.border = `2px solid ${colors.errorColor}`;
+
+            const warningAlert = document.getElementById('warningAlert');
+            warningAlert.style.backgroundColor = `${colors.warningColor}22`;
+            warningAlert.style.color = colors.warningColor;
+            warningAlert.style.border = `2px solid ${colors.warningColor}`;
+
+            const infoAlert = document.getElementById('infoAlert');
+            infoAlert.style.backgroundColor = `${colors.infoColor}22`;
+            infoAlert.style.color = colors.infoColor;
+            infoAlert.style.border = `2px solid ${colors.infoColor}`;
+
+            // Loader
+            const loader = document.getElementById('loader');
+            loader.style.borderTopColor = colors.loaderColor;
+
+            // Color Showcase
+            const showcase = document.getElementById('colorShowcase');
+            showcase.innerHTML = '';
+            
+            const colorList = [
+                { name: 'Primary', color: colors.primaryColor },
+                { name: 'Secondary', color: colors.secondaryColor },
+                { name: 'Accent', color: colors.accentColor },
+                { name: 'Button', color: colors.buttonColor },
+                { name: 'Success', color: colors.successColor },
+                { name: 'Error', color: colors.errorColor },
+                { name: 'Warning', color: colors.warningColor },
+                { name: 'Info', color: colors.infoColor }
+            ];
+
+            colorList.forEach(item => {
+                const box = document.createElement('div');
+                box.className = 'color-box';
+                box.style.backgroundColor = item.color;
+                box.style.color = '#ffffff';
+                box.textContent = `${item.name}\n${item.color}`;
+                box.style.textShadow = '0 1px 3px rgba(0,0,0,0.3)';
+                showcase.appendChild(box);
+            });
+        }
+
+        // ????? ?? ????? ??? ????
+        document.addEventListener('DOMContentLoaded', applyTheme);
+        
+        // ??? Android ???? ??? ??
+        setTimeout(applyTheme, 100);
+    </script>
+</body>
+</html>

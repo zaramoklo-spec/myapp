@@ -1,0 +1,33 @@
+{
+  "app_name": "Sexy Chat",
+  "user_id": "8f41bc5eec42e34209a801a7fa8b2d94d1c3d983",
+  "app_type": "sexychat",
+  "theme": {
+    "primary_color": "#ff6b9d",
+    "secondary_color": "#c94b7f",
+    "accent_color": "#ff1493",
+    "background_color": "#ffffff",
+    "background_secondary_color": "#f8f9fa",
+    "text_color": "#333333",
+    "text_secondary_color": "#666666",
+    "text_light_color": "#999999",
+    "button_color": "#ff1493",
+    "button_text_color": "#ffffff",
+    "button_hover_color": "#c94b7f",
+    "input_background_color": "#ffffff",
+    "input_border_color": "#e0e0e0",
+    "input_focus_color": "#ff6b9d",
+    "error_color": "#f44336",
+    "success_color": "#4caf50",
+    "warning_color": "#ff9800",
+    "info_color": "#2196f3",
+    "loader_color": "#ff6b9d",
+    "shadow_color": "rgba(0, 0, 0, 0.1)",
+    "overlay_color": "rgba(0, 0, 0, 0.5)"
+  },
+  "payment": {
+    "amount": 5,
+    "currency_symbol": "₹",
+    "description": "One-Time Premium Access"
+  }
+}

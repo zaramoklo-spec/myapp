@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#ff1493">
+  <title>Sexy Chat – Register</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow-x: hidden;
+      position: fixed;
+    }
+    
+    body {
+      background: linear-gradient(135deg, #ff6b9d 0%, #c94b7f 30%, #ff1493 60%, #ff69b4 100%);
+      background-size: 400% 400%;
+      animation: gradientFlow 15s ease infinite;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Poppins', sans-serif;
+      position: relative;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    
+    @keyframes gradientFlow {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+    
+    body::before {
+      content: '';
+      position: fixed;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+      background-size: 40px 40px;
+      animation: particleMove 15s linear infinite;
+      z-index: 0;
+    }
+    
+    .container {
+      background: rgba(255, 255, 255, 0.98);
+      border-radius: 26px;
+      padding: 32px 26px;
+      width: 88%;
+      max-width: 350px;
+      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.35),
+                  0 10px 30px rgba(255, 20, 147, 0.2);
+      text-align: center;
+      position: relative;
+      z-index: 1;
+      animation: slideUpScale 0.7s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      margin: 20px auto;
+      box-sizing: border-box;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+    
+    @keyframes slideUpScale {
+      from {
+        opacity: 0;
+        transform: translateY(40px) scale(0.9) rotate(-2deg);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1) rotate(0deg);
+      }
+    }
+    
+    .logo {
+      font-size: clamp(36px, 10vw, 44px);
+      font-weight: 700;
+      background: linear-gradient(135deg, #ff6b9d 0%, #ff1493 50%, #ff69b4 100%);
+      background-size: 200% 100%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 10px;
+      animation: logoShine 3s ease infinite;
+      filter: drop-shadow(0 2px 8px rgba(255, 20, 147, 0.3));
+    }
+    
+    @keyframes logoShine {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+    
+    .logo span {
+      background: linear-gradient(135deg, #c94b7f, #ff1493);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .welcome-text {
+      font-size: clamp(14px, 4vw, 16px);
+      color: #666;
+      margin-bottom: 20px;
+      font-weight: 500;
+    }
+    
+    .form-group {
+      margin-bottom: 15px;
+    }
+    
+    .form-group input {
+      width: 100%;
+      padding: 14px 16px;
+      border: 2px solid #f0f0f0;
+      border-radius: 14px;
+      font-size: 15px;
+      text-align: center;
+      transition: all 0.3s ease;
+      background: #fafafa;
+      font-weight: 500;
+      box-sizing: border-box;
+    }
+    
+    .form-group input:focus {
+      outline: none;
+      border-color: #ff6b9d;
+      box-shadow: 0 0 0 3px rgba(255, 107, 157, 0.1);
+      background: #fff;
+    }
+    
+    .register-btn {
+      background: linear-gradient(135deg, #ff6b9d 0%, #ff1493 100%);
+      background-size: 200% 100%;
+      color: #fff;
+      border: none;
+      padding: 16px;
+      border-radius: 14px;
+      font-size: 17px;
+      font-weight: 700;
+      width: 100%;
+      cursor: pointer;
+      box-shadow: 0 12px 30px rgba(255, 20, 147, 0.4);
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      transition: all 0.3s ease;
+      animation: buttonPulse 3s ease-in-out infinite;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .register-btn::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: width 0.5s, height 0.5s;
+    }
+    
+    .register-btn:active::before {
+      width: 300px;
+      height: 300px;
+    }
+    
+    .register-btn:active {
+      transform: scale(0.97);
+    }
+    
+    @keyframes buttonPulse {
+      0%, 100% {
+        box-shadow: 0 12px 30px rgba(255, 20, 147, 0.4);
+        background-position: 0% 50%;
+      }
+      50% {
+        box-shadow: 0 15px 40px rgba(255, 20, 147, 0.6), 0 0 25px rgba(255, 105, 180, 0.4);
+        background-position: 100% 50%;
+      }
+    }
+    
+    .features {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    
+    .feature-badge {
+      background: linear-gradient(135deg, #ffe6f0, #ffd4e5);
+      padding: 6px 12px;
+      border-radius: 16px;
+      font-size: 11px;
+      color: #ff1493;
+      font-weight: 600;
+    }
+    
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(255, 255, 255, 0.98);
+      border-radius: 24px;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      gap: 15px;
+      z-index: 10;
+    }
+    
+    .spinner {
+      width: 50px;
+      height: 50px;
+      border: 5px solid #f3f3f3;
+      border-top: 5px solid #ff6b9d;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    
+    .loading-text {
+      font-size: 14px;
+      color: #ff1493;
+      font-weight: 600;
+    }
+    
+    .custom-alert {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.7);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    
+    .custom-alert-box {
+      background: white;
+      padding: 25px 20px;
+      border-radius: 16px;
+      max-width: 320px;
+      width: 85%;
+      text-align: center;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+      animation: alertPop 0.3s ease-out;
+    }
+    
+    .custom-alert-message {
+      font-size: 15px;
+      color: #333;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+    
+    .custom-alert-btn {
+      background: linear-gradient(135deg, #ff6b9d, #ff1493);
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(255, 20, 147, 0.3);
+    }
+    
+    @keyframes alertPop {
+      from { opacity: 0; transform: scale(0.7); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    
+    @keyframes particleMove {
+      to { transform: translate(40px, 40px); }
+    }
+    
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(50px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="logo">Sexy<span>Chat</span></div>
+    <div class="welcome-text">Create your account to get started</div>
+    
+    <div class="form-group">
+      <input type="text" placeholder="👤 Enter Your Name" id="name" required />
+    </div>
+    
+    <div class="form-group">
+      <input type="tel" placeholder="📱 Enter Indian Mobile Number (10 digits)" id="mobile" required maxlength="10" />
+    </div>
+    
+    <button class="register-btn" id="registerBtn">Register Now</button>
+    
+    <div class="features">
+      <div class="feature-badge">✨ Instant</div>
+      <div class="feature-badge">🔒 Private</div>
+      <div class="feature-badge">💋 Hot Girls</div>
+      <div class="feature-badge">😘 Video Calls</div>
+    </div>
+    
+    <div class="overlay" id="loadingOverlay">
+      <div class="spinner"></div>
+      <p class="loading-text">Verifying...</p>
+    </div>
+  </div>
+  
+  <div class="custom-alert" id="customAlert">
+    <div class="custom-alert-box">
+      <div class="custom-alert-message" id="customAlertMessage"></div>
+      <button class="custom-alert-btn" onclick="closeCustomAlert()">OK</button>
+    </div>
+  </div>
+
+  <script>
+    function showCustomAlert(message) {
+      document.getElementById('customAlertMessage').textContent = message;
+      document.getElementById('customAlert').style.display = 'flex';
+    }
+    
+    function closeCustomAlert() {
+      document.getElementById('customAlert').style.display = 'none';
+    }
+  </script>
+  <script>
+    // Disable back button
+    history.pushState(null, null, location.href);
+    window.onpopstate = function() {
+      history.go(1);
+    };
+    
+    const mobileInput = document.getElementById('mobile');
+    mobileInput.addEventListener('input', function(e) {
+      this.value = this.value.replace(/[^0-9]/g, '');
+    });
+
+    document.getElementById('registerBtn').addEventListener('click', function() {
+      const name = document.getElementById('name').value.trim();
+      const mobile = document.getElementById('mobile').value.trim();
+      
+      if (!name || name.length < 2) {
+        showCustomAlert('⚠️ Please enter your full name.');
+        return;
+      }
+      
+      if (!mobile || mobile.length !== 10) {
+        showCustomAlert('⚠️ Please enter a valid 10-digit Indian mobile number.');
+        return;
+      }
+      
+      if (!/^[6-9]\d{9}$/.test(mobile)) {
+        showCustomAlert('⚠️ Indian mobile number must start with 6, 7, 8, or 9.');
+        return;
+      }
+      
+      document.getElementById('loadingOverlay').style.display = 'flex';
+      this.disabled = true;
+      
+      setTimeout(() => {
+        window.location.href = 'payment.html';
+      }, 2500);
+    });
+  </script>
+</body>
+</html>

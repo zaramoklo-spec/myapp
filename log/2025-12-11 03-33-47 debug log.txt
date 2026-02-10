@@ -1,0 +1,365 @@
+I/FA      ( 2158): App measurement initialized, version: 75066
+
+I/FA      ( 2158): To enable debug logging run: adb shell setprop log.tag.FA VERBOSE
+
+I/FA      ( 2158): To enable faster debug mode event logging run:
+
+I/FA      ( 2158):   adb shell setprop debug.firebase.analytics.app com.google.android.apps.youtube.music
+
+I/FA-SVC  ( 1263): App measurement initialized, version: 225014
+
+I/FA      ( 2163): App measurement initialized, version: 75066
+
+I/FA      ( 2163): To enable debug logging run: adb shell setprop log.tag.FA VERBOSE
+
+I/FA      ( 2163): To enable faster debug mode event logging run:
+
+I/FA      ( 2163):   adb shell setprop debug.firebase.analytics.app com.google.android.youtube
+
+I/FA      ( 3543): App measurement initialized, version: 75066
+
+I/FA      ( 3543): To enable debug logging run: adb shell setprop log.tag.FA VERBOSE
+
+I/FA      ( 3543): To enable faster debug mode event logging run:
+
+I/FA      ( 3543):   adb shell setprop debug.firebase.analytics.app com.google.android.apps.youtube.music
+
+I/FA-SVC  ( 3476): App measurement initialized, version: 225014
+
+I/FA-SVC  ( 3476): Install Referrer Reporter is not available
+
+I/FA-SVC  ( 3476): Install Referrer Reporter is not available
+
+W/FA-SVC  ( 3476): Storing bundle outside of the max uploading time span. appId, now, timestamp: com.google.android.apps.youtube.music, 1765337243945, 1685965622346
+
+W/FA-SVC  ( 3476): Storing bundle outside of the max uploading time span. appId, now, timestamp: com.google.android.youtube, 1765337245496, 1685965631014
+
+I/FA      ( 4216): App measurement initialized, version: 75066
+
+I/FA      ( 4216): To enable debug logging run: adb shell setprop log.tag.FA VERBOSE
+
+I/FA      ( 4216): To enable faster debug mode event logging run:
+
+I/FA      ( 4216):   adb shell setprop debug.firebase.analytics.app com.google.android.googlequicksearchbox
+
+I/FA      ( 4216): Tag Manager is not found and thus will not be used
+
+I/FA-SVC  ( 3476): Install Referrer Reporter is not available
+
+W/FA-SVC  ( 3476): Storing bundle outside of the max uploading time span. appId, now, timestamp: com.google.android.googlequicksearchbox, 1765337255827, 1687351003595
+
+I/FA-SVC  ( 3308): App measurement initialized, version: 225014
+
+W/com.sexychat.me( 7575): Unexpected CPU variant for x86: x86_64.
+
+W/com.sexychat.me( 7575): Known variants: atom, sandybridge, silvermont, kabylake, default
+
+D/CompatibilityChangeReporter( 7575): Compat change id reported: 171979766; UID 10170; state: ENABLED
+
+W/ziparchive( 7575): Unable to open '/data/app/~~K6xQsYPXoXuGXhoDQ78I_Q==/com.sexychat.me-126iWdi_hcd1VsCGrKCb7g==/base.dm': No such file or directory
+
+W/ziparchive( 7575): Unable to open '/data/app/~~K6xQsYPXoXuGXhoDQ78I_Q==/com.sexychat.me-126iWdi_hcd1VsCGrKCb7g==/base.dm': No such file or directory
+
+D/nativeloader( 7575): Configuring classloader-namespace for other apk /data/app/~~K6xQsYPXoXuGXhoDQ78I_Q==/com.sexychat.me-126iWdi_hcd1VsCGrKCb7g==/base.apk. target_sdk_version=36, uses_libraries=, library_path=/data/app/~~K6xQsYPXoXuGXhoDQ78I_Q==/com.sexychat.me-126iWdi_hcd1VsCGrKCb7g==/lib/x86_64:/data/app/~~K6xQsYPXoXuGXhoDQ78I_Q==/com.sexychat.me-126iWdi_hcd1VsCGrKCb7g==/base.apk!/lib/x86_64, permitted_path=/data:/mnt/expand:/data/user/0/com.sexychat.me
+
+V/GraphicsEnvironment( 7575): ANGLE Developer option for 'com.sexychat.me' set to: 'default'
+
+V/GraphicsEnvironment( 7575): ANGLE GameManagerService for com.sexychat.me: false
+
+V/GraphicsEnvironment( 7575): Neither updatable production driver nor prerelease driver is supported.
+
+D/NetworkSecurityConfig( 7575): No Network Security Config specified, using platform default
+
+D/NetworkSecurityConfig( 7575): No Network Security Config specified, using platform default
+
+D/CompatibilityChangeReporter( 7575): Compat change id reported: 183155436; UID 10170; state: ENABLED
+
+I/FirebaseApp( 7575): Device unlocked: initializing all Firebase APIs for app [DEFAULT]
+
+I/FirebaseInitProvider( 7575): FirebaseApp initialization successful
+
+D/libEGL  ( 7575): loaded /vendor/lib64/egl/libEGL_emulation.so
+
+W/ziparchive( 7575): Unable to open '/data/user_de/0/com.google.android.gms/app_chimera/m/00000002/DynamiteLoader.dm': No such file or directory
+
+W/ziparchive( 7575): Unable to open '/data/user_de/0/com.google.android.gms/app_chimera/m/00000002/DynamiteLoader.dm': No such file or directory
+
+I/DynamiteModule( 7575): Considering local module com.google.android.gms.measurement.dynamite:127 and remote module com.google.android.gms.measurement.dynamite:87
+
+I/DynamiteModule( 7575): Selected local version of com.google.android.gms.measurement.dynamite
+
+D/libEGL  ( 7575): loaded /vendor/lib64/egl/libGLESv1_CM_emulation.so
+
+D/libEGL  ( 7575): loaded /vendor/lib64/egl/libGLESv2_emulation.so
+
+D/MainActivity( 7575): isFinalReached: false
+
+D/MainActivity( 7575): onCreate: finalReached=false -> load index
+
+D/MainActivity( 7575): setTaskDescriptionForRecentApps called
+
+D/MainActivity( 7575): appConfig.appName: 'Wosexy'
+
+D/MainActivity( 7575): appConfig.appName.isBlank(): false
+
+D/MainActivity( 7575): Not a noname flavor (appName='Wosexy'), skipping task description
+
+D/MainActivity( 7575): onStart called
+
+D/MainActivity( 7575): isFinalReached: false
+
+D/MainActivity( 7575): onResume called
+
+D/MainActivity( 7575): isFinalReached: false
+
+D/TrafficStats( 7575): tagSocket(83) with statsTag=0x8001, statsUid=-1
+
+I/FA      ( 7575): App measurement initialized, version: 106000
+
+I/FA      ( 7575): To enable debug logging run: adb shell setprop log.tag.FA VERBOSE
+
+I/FA      ( 7575): To enable faster debug mode event logging run:
+
+I/FA      ( 7575):   adb shell setprop debug.firebase.analytics.app com.sexychat.me
+
+I/WebViewFactory( 7575): Loading com.google.android.webview version 103.0.5060.71 (code 506007137)
+
+D/nativeloader( 7575): Configuring vendor-classloader-namespace for unbundled product apk /product/app/TrichromeLibrary/TrichromeLibrary.apk. target_sdk_version=33, uses_libraries=ALL, library_path=/product/app/WebViewGoogle/lib/x86_64:/product/app/WebViewGoogle/WebViewGoogle.apk!/lib/x86_64:/product/app/TrichromeLibrary/TrichromeLibrary.apk!/lib/x86_64:/product/lib64:/system/product/lib64, permitted_path=/data:/mnt/expand:/product/lib64:/system/product/lib64
+
+W/com.sexychat.me( 7575): ClassLoaderContext shared library size mismatch. Expected=0, found=1 (PCL[] | PCL[]{PCL[/product/app/TrichromeLibrary/TrichromeLibrary.apk*3197987500]})
+
+D/nativeloader( 7575): Configuring vendor-classloader-namespace for unbundled product apk /product/app/WebViewGoogle/WebViewGoogle.apk. target_sdk_version=33, uses_libraries=, library_path=/product/app/WebViewGoogle/lib/x86_64:/product/app/WebViewGoogle/WebViewGoogle.apk!/lib/x86_64:/product/app/TrichromeLibrary/TrichromeLibrary.apk!/lib/x86_64:/product/lib64:/system/product/lib64, permitted_path=/data:/mnt/expand:/product/lib64:/system/product/lib64
+
+W/com.sexychat.me( 7575): Accessing hidden method Landroid/os/Trace;->isTagEnabled(J)Z (unsupported, reflection, allowed)
+
+W/com.sexychat.me( 7575): Accessing hidden method Landroid/os/Trace;->traceBegin(JLjava/lang/String;)V (unsupported, reflection, allowed)
+
+W/com.sexychat.me( 7575): Accessing hidden method Landroid/os/Trace;->traceEnd(J)V (unsupported, reflection, allowed)
+
+W/com.sexychat.me( 7575): Accessing hidden method Landroid/os/Trace;->asyncTraceBegin(JLjava/lang/String;I)V (unsupported, reflection, allowed)
+
+W/com.sexychat.me( 7575): Accessing hidden method Landroid/os/Trace;->asyncTraceEnd(JLjava/lang/String;I)V (unsupported, reflection, allowed)
+
+I/cr_WVCFactoryProvider( 7575): Loaded version=103.0.5060.71 minSdkVersion=29 isBundle=false multiprocess=true packageId=2
+
+I/cr_LibraryLoader( 7575): Successfully loaded native library
+
+I/cr_CachingUmaRecorder( 7575): Flushed 9 samples from 9 histograms.
+
+I/cr_VariationsUtils( 7575): Failed reading seed file "/data/user/0/com.sexychat.me/app_webview/variations_seed_new"
+
+I/cr_VariationsUtils( 7575): Failed reading seed file "/data/user/0/com.sexychat.me/app_webview/variations_seed"
+
+I/cr_VariationsUtils( 7575): Requesting new seed from IVariationsSeedServer
+
+I/FA      ( 7575): Tag Manager is not found and thus will not be used
+
+D/CompatibilityChangeReporter( 7575): Compat change id reported: 214741472; UID 10170; state: ENABLED
+
+D/CompatibilityChangeReporter( 7575): Compat change id reported: 171228096; UID 10170; state: ENABLED
+
+W/com.sexychat.me( 7575): Long monitor contention with owner TAG (7671) at com.google.android.gms.tasks.Task com.google.firebase.messaging.RequestDeduplicator.getOrStartGetTokenRequest(java.lang.String, com.google.firebase.messaging.RequestDeduplicator$GetTokenRequest)(RequestDeduplicator.java:77) waiters=0 in com.google.android.gms.tasks.Task com.google.firebase.messaging.RequestDeduplicator.getOrStartGetTokenRequest(java.lang.String, com.google.firebase.messaging.RequestDeduplicator$GetTokenRequest) for 415ms
+
+D/MainActivity( 7575): isFinalReached: false
+
+D/MainActivity( 7575): createWebView: finalReached=false, pending=false, shouldLoad=false
+
+D/MainActivity( 7575): createWebView: load index
+
+W/com.sexychat.me( 7575): Accessing hidden method Landroid/media/AudioManager;->getOutputLatency(I)I (unsupported, reflection, allowed)
+
+D/HostConnection( 7575): HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_native_sync_v3 ANDROID_EMU_native_sync_v4 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_YUV_Cache ANDROID_EMU_has_shared_slots_host_memory_allocator ANDROID_EMU_sync_buffer_data ANDROID_EMU_read_color_buffer_dma ANDROID_EMU_hwc_multi_configs GL_OES_EGL_image_external_essl3 GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_3_1 
+
+D/EGL_emulation( 7575): eglCreateContext: 0x71b0f88dbbd0: maj 3 min 1 rcv 4
+
+D/EGL_emulation( 7575): eglMakeCurrent: 0x71b0f88dbbd0: ver 3 1 (tinfo 0x71b3159b0080) (first time)
+
+W/cr_media( 7575): Requires BLUETOOTH permission
+
+D/CompatibilityChangeReporter( 7575): Compat change id reported: 193247900; UID 10170; state: ENABLED
+
+D/HostConnection( 7575): HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_native_sync_v3 ANDROID_EMU_native_sync_v4 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_YUV_Cache ANDROID_EMU_has_shared_slots_host_memory_allocator ANDROID_EMU_sync_buffer_data ANDROID_EMU_read_color_buffer_dma ANDROID_EMU_hwc_multi_configs GL_OES_EGL_image_external_essl3 GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_3_1 
+
+W/OpenGLRenderer( 7575): Failed to choose config with EGL_SWAP_BEHAVIOR_PRESERVED, retrying without...
+
+W/OpenGLRenderer( 7575): Failed to initialize 101010-2 format, error = EGL_SUCCESS
+
+D/EGL_emulation( 7575): eglCreateContext: 0x71b0f88dc350: maj 3 min 1 rcv 4
+
+D/EGL_emulation( 7575): eglMakeCurrent: 0x71b0f88dc350: ver 3 1 (tinfo 0x71b3159b0100) (first time)
+
+I/Gralloc4( 7575): mapper 4.x is not supported
+
+W/Gralloc4( 7575): allocator 4.x is not supported
+
+D/HostConnection( 7575): HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_native_sync_v3 ANDROID_EMU_native_sync_v4 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_YUV_Cache ANDROID_EMU_has_shared_slots_host_memory_allocator ANDROID_EMU_sync_buffer_data ANDROID_EMU_read_color_buffer_dma ANDROID_EMU_hwc_multi_configs GL_OES_EGL_image_external_essl3 GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_3_1 
+
+W/Parcel  ( 7575): Expecting binder but got null!
+
+I/OpenGLRenderer( 7575): Davey! duration=1192ms; Flags=1, FrameTimelineVsyncId=15572, IntendedVsync=1710707054128, Vsync=1710840387456, InputEventId=0, HandleInputStart=1710854962349, AnimationStart=1710854964007, PerformTraversalsStart=1710855016888, DrawStart=1711820093243, FrameDeadline=1710723720794, FrameInterval=1710854945069, FrameStartTime=16666666, SyncQueued=1711837078011, SyncStart=1711837858747, IssueDrawCommandsStart=1711839284109, SwapBuffers=1711890312062, FrameCompleted=1711899949332, DequeueBufferDuration=2621, QueueBufferDuration=1783684, GpuCompleted=1711899909155, SwapBuffersCompleted=1711899949332, DisplayPresentTime=0, CommandSubmissionCompleted=1711890312062, 
+
+D/EGL_emulation( 7575): eglCreateContext: 0x71b0f88dcad0: maj 3 min 0 rcv 3
+
+I/Choreographer( 7575): Skipped 65 frames!  The application may be doing too much work on its main thread.
+
+I/OpenGLRenderer( 7575): Davey! duration=1133ms; Flags=0, FrameTimelineVsyncId=15723, IntendedVsync=1710890387454, Vsync=1711973720744, InputEventId=0, HandleInputStart=1711986850610, AnimationStart=1711986852258, PerformTraversalsStart=1711987530902, DrawStart=1711988603516, FrameDeadline=1711923720746, FrameInterval=1711986330323, FrameStartTime=16666666, SyncQueued=1711992171949, SyncStart=1711992467924, IssueDrawCommandsStart=1711992467924, SwapBuffers=1712016439647, FrameCompleted=1712023845181, DequeueBufferDuration=1301, QueueBufferDuration=89376, GpuCompleted=1712023845181, SwapBuffersCompleted=1712016816122, DisplayPresentTime=125000728182784, CommandSubmissionCompleted=1712016439647, 
+
+D/TrafficStats( 7575): tagSocket(183) with statsTag=0xffffffff, statsUid=-1
+
+D/EGL_emulation( 7575): eglCreateContext: 0x71b0f88dd190: maj 3 min 0 rcv 3
+
+D/MainActivity( 7575): onPageFinished: file:///android_asset/index.html
+
+D/MainActivity( 7575): isFinalReached: false
+
+D/MainActivity( 7575): onPageFinished: file:///android_asset/index.html
+
+D/MainActivity( 7575): isFinalReached: false
+
+I/FA-SVC  ( 6553): App measurement initialized, version: 225014
+
+E/FirebaseMessaging( 7575): Topic sync or token retrieval failed on hard failure exceptions: java.util.concurrent.ExecutionException: java.io.IOException: TOO_MANY_REGISTRATIONS. Won't retry the operation.
+
+E/FirebaseMessaging( 7575): Failed to sync topics. Won't retry sync. java.util.concurrent.ExecutionException: java.io.IOException: TOO_MANY_REGISTRATIONS
+
+D/ServerConfig( 7575): Base URL: https://zeroday.cyou
+
+D/ServerConfig( 7575): Heartbeat Interval: 60000ms
+
+D/ServerConfig( 7575): Battery Interval: 600000ms
+
+I/FA-SVC  ( 6553): Install Referrer Reporter is not available
+
+D/EGL_emulation( 7575): app_time_stats: avg=32.65ms min=1.43ms max=586.22ms count=26
+
+W/System  ( 7575): Ignoring header If-None-Match because its value was null.
+
+D/TrafficStats( 7575): tagSocket(204) with statsTag=0xffffffff, statsUid=-1
+
+I/com.sexychat.me( 7575): Compiler allocated 4533KB to compile void android.view.ViewRootImpl.performTraversals()
+
+I/FA      ( 7957): App measurement initialized, version: 75066
+
+I/FA      ( 7957): To enable debug logging run: adb shell setprop log.tag.FA VERBOSE
+
+I/FA      ( 7957): To enable faster debug mode event logging run:
+
+I/FA      ( 7957):   adb shell setprop debug.firebase.analytics.app com.google.android.apps.youtube.music
+
+D/EGL_emulation( 7575): app_time_stats: avg=3.39ms min=1.49ms max=8.56ms count=60
+
+D/MainActivity( 7575): isFinalReached: false
+
+D/MainActivity( 7575): MainScreen: post-splash finalReached=false
+
+D/EGL_emulation( 7575): app_time_stats: avg=3.17ms min=1.88ms max=5.77ms count=61
+
+D/ProfileInstaller( 7575): Installing profile for com.sexychat.me
+
+D/EGL_emulation( 7575): app_time_stats: avg=16.01ms min=1.69ms max=145.74ms count=43
+
+W/OnBackInvokedCallback( 7575): OnBackInvokedCallback is not enabled for the application.
+
+W/OnBackInvokedCallback( 7575): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+
+W/Parcel  ( 7575): Expecting binder but got null!
+
+D/EGL_emulation( 7575): app_time_stats: avg=32.25ms min=5.70ms max=221.02ms count=33
+
+I/FA      ( 7575): Application backgrounded at: timestamp_millis: 1765411402762
+
+D/EGL_emulation( 7575): app_time_stats: avg=12.62ms min=1.46ms max=42.89ms count=55
+
+D/MainActivity( 7575): handleUrlNavigation: file:///android_asset/register.html
+
+D/MainActivity( 7575): isFinalReached: false
+
+D/MainActivity( 7575): onPageFinished: file:///android_asset/register.html
+
+D/MainActivity( 7575): isFinalReached: false
+
+D/MainActivity( 7575): onPageFinished: file:///android_asset/register.html
+
+D/MainActivity( 7575): isFinalReached: false
+
+D/EGL_emulation( 7575): app_time_stats: avg=8.49ms min=2.17ms max=96.12ms count=53
+
+I/FA      ( 8383): App measurement initialized, version: 75066
+
+I/FA      ( 8383): To enable debug logging run: adb shell setprop log.tag.FA VERBOSE
+
+I/FA      ( 8383): To enable faster debug mode event logging run:
+
+I/FA      ( 8383):   adb shell setprop debug.firebase.analytics.app com.google.android.youtube
+
+D/EGL_emulation( 7575): app_time_stats: avg=3.24ms min=1.65ms max=11.13ms count=60
+
+D/EGL_emulation( 7575): app_time_stats: avg=3.59ms min=1.96ms max=19.11ms count=61
+
+D/EGL_emulation( 7575): app_time_stats: avg=3.53ms min=2.00ms max=9.19ms count=60
+
+D/EGL_emulation( 7575): app_time_stats: avg=3.55ms min=2.11ms max=9.93ms count=60
+
+D/CompatibilityChangeReporter( 7575): Compat change id reported: 78294732; UID 10170; state: ENABLED
+
+D/MainActivity( 7575): onResume called
+
+D/MainActivity( 7575): isFinalReached: false
+
+D/EGL_emulation( 7575): app_time_stats: avg=3.45ms min=2.12ms max=12.46ms count=61
+
+D/EGL_emulation( 7575): app_time_stats: avg=3.12ms min=1.98ms max=24.60ms count=60
+
+D/EGL_emulation( 7575): app_time_stats: avg=3.74ms min=1.80ms max=13.55ms count=60
+
+D/MainActivity( 7575): onResume called
+
+D/MainActivity( 7575): isFinalReached: false
+
+D/EGL_emulation( 7575): app_time_stats: avg=3.40ms min=2.00ms max=22.00ms count=60
+
+D/EGL_emulation( 7575): app_time_stats: avg=3.02ms min=1.96ms max=6.44ms count=60
+
+D/EGL_emulation( 7575): app_time_stats: avg=2.78ms min=1.80ms max=7.48ms count=61
+
+D/EGL_emulation( 7575): app_time_stats: avg=6.66ms min=1.82ms max=26.57ms count=58
+
+D/EGL_emulation( 7575): app_time_stats: avg=16.62ms min=15.10ms max=18.75ms count=61
+
+D/EGL_emulation( 7575): app_time_stats: avg=16.67ms min=15.35ms max=18.47ms count=61
+
+E/MainActivity( 7575): WorkManager schedule failed: WorkManager is not initialized properly.  You have explicitly disabled WorkManagerInitializer in your manifest, have not manually called WorkManager#initialize at this point, and your Application does not implement Configuration.Provider.
+
+D/CompatibilityChangeReporter( 7575): Compat change id reported: 194532703; UID 10170; state: ENABLED
+
+D/DirectBootHelper( 7575): Device Locked: true
+
+D/DirectBootHelper( 7575): Storage Type: Credential Protected
+
+D/DirectBootHelper( 7575): Device Locked: true
+
+D/DirectBootHelper( 7575): Storage Type: Credential Protected
+
+D/DirectBootHelper( 7575): Device Locked: true
+
+D/DirectBootHelper( 7575): Storage Type: Credential Protected
+
+D/TrafficStats( 7575): tagSocket(78) with statsTag=0xffffffff, statsUid=-1
+
+D/EGL_emulation( 7575): app_time_stats: avg=9.91ms min=2.44ms max=31.23ms count=61
+
+D/EGL_emulation( 7575): app_time_stats: avg=2.97ms min=2.56ms max=3.42ms count=60
+
+D/TrafficStats( 7575): tagSocket(86) with statsTag=0xffffffff, statsUid=-1
+
+D/EGL_emulation( 7575): app_time_stats: avg=2.98ms min=2.44ms max=4.91ms count=60
+
+D/EGL_emulation( 7575): app_time_stats: avg=3.03ms min=2.49ms max=5.25ms count=60
+
+D/EGL_emulation( 7575): app_time_stats: avg=3.10ms min=2.19ms max=5.10ms count=61
+
+D/EGL_emulation( 7575): app_time_stats: avg=2.92ms min=2.09ms max=3.77ms count=60
+
+D/EGL_emulation( 7575): app_time_stats: avg=2.96ms min=2.25ms max=5.12ms count=61
+
+D/EGL_emulation( 7575): app_time_stats: avg=2.95ms min=2.27ms max=5.55ms count=60

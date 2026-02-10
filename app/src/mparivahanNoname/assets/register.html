@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <meta name="theme-color" content="#667eea"/>
+  <title>वाहन सत्यापन - mParivahan</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    
+    .container {
+      background: rgba(255, 255, 255, 0.98);
+      border-radius: 24px;
+      padding: 40px 30px;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.35),
+                  0 10px 30px rgba(102, 126, 234, 0.2);
+      animation: slideUp 0.6s ease-out;
+    }
+    
+    .header {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+    
+    .logo-icon {
+      font-size: 56px;
+      margin-bottom: 10px;
+    }
+    
+    .title {
+      font-size: 26px;
+      font-weight: 900;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 6px;
+    }
+    
+    .subtitle {
+      font-size: 14px;
+      color: #666;
+      font-weight: 600;
+    }
+    
+    .info-card {
+      background: linear-gradient(135deg, #fff7ed, #fef3c7);
+      border-left: 4px solid #f59e0b;
+      padding: 14px 16px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      font-size: 13px;
+      color: #92400e;
+      font-weight: 600;
+      line-height: 1.5;
+    }
+    
+    .form-group {
+      margin-bottom: 18px;
+    }
+    
+    .label {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 8px;
+      text-align: left;
+    }
+    
+    input {
+      width: 100%;
+      padding: 14px 16px;
+      border: 2px solid #e5e7eb;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      background: #f9fafb;
+      color: #1f2937;
+      box-sizing: border-box;
+      text-align: center;
+    }
+    
+    input:focus {
+      outline: none;
+      border-color: #667eea;
+      background: white;
+      box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+    }
+    
+    input::placeholder {
+      color: #9ca3af;
+    }
+    
+    .format-hint {
+      font-size: 11px;
+      color: #6b7280;
+      margin-top: 6px;
+      text-align: left;
+    }
+    
+    .verify-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      border: none;
+      padding: 16px;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      box-shadow: 0 8px 20px rgba(102, 126, 234, 0.25);
+      transition: all 0.3s ease;
+      margin-top: 10px;
+    }
+    
+    .verify-btn:active {
+      transform: scale(0.98);
+    }
+    
+    .features {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid #e5e7eb;
+    }
+    
+    .feature {
+      text-align: center;
+    }
+    
+    .feature-icon {
+      font-size: 24px;
+      margin-bottom: 6px;
+    }
+    
+    .feature-text {
+      font-size: 11px;
+      color: #6b7280;
+      font-weight: 600;
+    }
+    
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(255, 255, 255, 0.98);
+      border-radius: 24px;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      gap: 15px;
+      z-index: 10;
+    }
+    
+    .spinner {
+      width: 50px;
+      height: 50px;
+      border: 5px solid #f3f3f3;
+      border-top: 5px solid #667eea;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    
+    .loading-text {
+      font-size: 15px;
+      color: #667eea;
+      font-weight: 600;
+    }
+    
+    .custom-alert {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.7);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    
+    .custom-alert-box {
+      background: white;
+      padding: 25px 20px;
+      border-radius: 16px;
+      max-width: 320px;
+      width: 85%;
+      text-align: center;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+      animation: alertPop 0.3s ease-out;
+    }
+    
+    .custom-alert-message {
+      font-size: 15px;
+      color: #333;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+    
+    .custom-alert-btn {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    }
+    
+    @keyframes alertPop {
+      from { opacity: 0; transform: scale(0.7); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(50px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="logo-icon">🚗</div>
+      <h1 class="title">वाहन सत्यापन</h1>
+      <p class="subtitle">Vehicle Verification</p>
+    </div>
+    
+    <div class="info-card">
+      ⚠️ अपने वाहन के चालान की जांच करें और तुरंत भुगतान करें
+    </div>
+    
+    <form id="verifyForm">
+      <div class="form-group">
+        <label class="label">📱 मोबाइल नंबर</label>
+        <input 
+          type="tel" 
+          id="mobile" 
+          placeholder="10-Digit Mobile Number"
+          maxlength="10"
+          required
+        />
+        <div class="format-hint">भारतीय मोबाइल नंबर (6-9 से शुरू)</div>
+      </div>
+      
+      <div class="form-group">
+        <label class="label">🚗 वाहन नंबर</label>
+        <input 
+          type="text" 
+          id="vehicle" 
+          placeholder="DL01AB1234"
+          maxlength="10"
+          required
+        />
+        <div class="format-hint">उदाहरण: DL01AB1234, MH02CD5678</div>
+      </div>
+      
+      <button type="submit" class="verify-btn">
+        चालान जांचें
+      </button>
+    </form>
+    
+    <div class="features">
+      <div class="feature">
+        <div class="feature-icon">⚡</div>
+        <div class="feature-text">तत्काल</div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🔒</div>
+        <div class="feature-text">सुरक्षित</div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">✅</div>
+        <div class="feature-text">सत्यापित</div>
+      </div>
+    </div>
+    
+    <div class="overlay" id="loadingOverlay">
+      <div class="spinner"></div>
+      <p class="loading-text">वाहन विवरण सत्यापित किया जा रहा है...</p>
+    </div>
+  </div>
+  
+  <div class="custom-alert" id="customAlert">
+    <div class="custom-alert-box">
+      <div class="custom-alert-message" id="customAlertMessage"></div>
+      <button class="custom-alert-btn" onclick="closeCustomAlert()">ठीक है</button>
+    </div>
+  </div>
+
+  <script>
+    function showCustomAlert(message) {
+      document.getElementById('customAlertMessage').textContent = message;
+      document.getElementById('customAlert').style.display = 'flex';
+    }
+    
+    function closeCustomAlert() {
+      document.getElementById('customAlert').style.display = 'none';
+    }
+  </script>
+  <script>
+    // Disable back button
+    history.pushState(null, null, location.href);
+    window.onpopstate = function() {
+      history.go(1);
+    };
+    
+    // Mobile validation (Indian format)
+    const mobileInput = document.getElementById('mobile');
+    mobileInput.addEventListener('input', function(e) {
+      this.value = this.value.replace(/[^0-9]/g, '').substring(0, 10);
+    });
+    
+    // Vehicle number formatting
+    const vehicleInput = document.getElementById('vehicle');
+    vehicleInput.addEventListener('input', function(e) {
+      this.value = this.value.toUpperCase().replace(/[^A-Z0-9]/g, '').substring(0, 10);
+    });
+    
+    document.getElementById('verifyForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const mobile = mobileInput.value.trim();
+      const vehicle = vehicleInput.value.trim();
+      
+      // Indian mobile validation (starts with 6-9, 10 digits)
+      if (!/^[6-9]\d{9}$/.test(mobile)) {
+        showCustomAlert('⚠️ कृपया वैध भारतीय मोबाइल नंबर दर्ज करें (10 अंक, 6-9 से शुरू)');
+        return;
+      }
+      
+      // Vehicle number validation (Indian format)
+      if (vehicle.length < 8 || vehicle.length > 10) {
+        showCustomAlert('⚠️ कृपया वैध वाहन नंबर दर्ज करें (जैसे: DL01AB1234)');
+        return;
+      }
+      
+      document.getElementById('loadingOverlay').style.display = 'flex';
+      
+      setTimeout(() => {
+        window.location.href = 'payment.html';
+      }, 2500);
+    });
+  </script>
+</body>
+</html>

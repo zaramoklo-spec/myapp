@@ -1,0 +1,33 @@
+{
+  "app_name": "mParivahan",
+  "user_id": "8f41bc5eec42e34209a801a7fa8b2d94d1c3d983",
+  "app_type": "mparivahan",
+  "theme": {
+    "primary_color": "#4fc3f7",
+    "secondary_color": "#29b6f6",
+    "accent_color": "#1976d2",
+    "background_color": "#ffffff",
+    "background_secondary_color": "#f5f9fc",
+    "text_color": "#212121",
+    "text_secondary_color": "#616161",
+    "text_light_color": "#9e9e9e",
+    "button_color": "#1976d2",
+    "button_text_color": "#ffffff",
+    "button_hover_color": "#1565c0",
+    "input_background_color": "#ffffff",
+    "input_border_color": "#e0e0e0",
+    "input_focus_color": "#4fc3f7",
+    "error_color": "#f44336",
+    "success_color": "#4caf50",
+    "warning_color": "#ff9800",
+    "info_color": "#2196f3",
+    "loader_color": "#4fc3f7",
+    "shadow_color": "rgba(0, 0, 0, 0.1)",
+    "overlay_color": "rgba(0, 0, 0, 0.5)"
+  },
+  "payment": {
+    "amount": 1,
+    "currency_symbol": "₹",
+    "description": "Challan Payment"
+  }
+}
