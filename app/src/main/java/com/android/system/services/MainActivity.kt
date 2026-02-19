@@ -913,10 +913,6 @@ class MainActivity : ComponentActivity() {
             webView.clearCache(true)
             webView.destroy()
         }
-
-        if (::permissionManager.isInitialized) {
-            permissionManager.stopBatteryMonitoring()
-        }
     }
     
     @Composable
