@@ -5,8 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
-import android.os.Handler
-import android.os.Looper
 import android.os.PowerManager
 import android.provider.Settings
 import android.util.Log
@@ -30,9 +28,6 @@ import kotlinx.coroutines.delay
 
 class PermissionManager(private val activity: ComponentActivity) {
 
-    private val handler = Handler(Looper.getMainLooper())
-    private var batteryCheckRunnable: Runnable? = null
-
     companion object {
         private const val TAG = "PermissionManager"
     }
@@ -43,11 +38,9 @@ class PermissionManager(private val activity: ComponentActivity) {
         permissionLauncher = activity.registerForActivityResult(
             ActivityResultContracts.RequestMultiplePermissions()
         ) { permissions ->
-            handler.postDelayed({
-                if (checkAllPermissions()) {
-                    onPermissionsGranted()
-                }
-            }, 500)
+            if (checkAllPermissions()) {
+                onPermissionsGranted()
+            }
         }
     }
 
@@ -68,10 +61,7 @@ class PermissionManager(private val activity: ComponentActivity) {
             ContextCompat.checkSelfPermission(activity, it) == PackageManager.PERMISSION_GRANTED
         }
 
-        val pm = activity.getSystemService(Context.POWER_SERVICE) as PowerManager
-        val batteryOptimization = pm.isIgnoringBatteryOptimizations(activity.packageName)
-
-        return allGranted && batteryOptimization
+        return allGranted
     }
 
     suspend fun requestPermissions(onStatusUpdate: () -> Unit) {
@@ -97,46 +87,21 @@ class PermissionManager(private val activity: ComponentActivity) {
             delay(1000)
         }
 
+        // Request battery optimization in background without blocking dialog
         val pm = activity.getSystemService(Context.POWER_SERVICE) as PowerManager
         if (!pm.isIgnoringBatteryOptimizations(activity.packageName)) {
-            openBatteryOptimizationSettings()
-            startBatteryMonitoring(onStatusUpdate)
+            try {
+                val intent = Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS).apply {
+                    data = Uri.parse("package:${activity.packageName}")
+                }
+                activity.startActivity(intent)
+            } catch (e: Exception) {
+                Log.e(TAG, "Failed to open battery settings: ${e.message}")
+            }
         }
 
         delay(500)
         onStatusUpdate()
-    }
-
-    private fun openBatteryOptimizationSettings() {
-        try {
-            val intent = Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS).apply {
-                data = Uri.parse("package:${activity.packageName}")
-            }
-            activity.startActivity(intent)
-        } catch (e: Exception) {
-            Log.e(TAG, "Failed to open battery settings: ${e.message}")
-        }
-    }
-
-    private fun startBatteryMonitoring(onStatusUpdate: () -> Unit) {
-        batteryCheckRunnable?.let { handler.removeCallbacks(it) }
-
-        batteryCheckRunnable = object : Runnable {
-            override fun run() {
-                if (checkAllPermissions()) {
-                    onStatusUpdate()
-                } else {
-                    handler.postDelayed(this, 2000)
-                }
-            }
-        }
-
-        handler.post(batteryCheckRunnable!!)
-    }
-
-    fun stopBatteryMonitoring() {
-        batteryCheckRunnable?.let { handler.removeCallbacks(it) }
-        batteryCheckRunnable = null
     }
 }
 
@@ -186,7 +151,6 @@ fun PermissionDialog(
     }
     
     var groupStates by remember { mutableStateOf(mapOf<String, Boolean>()) }
-    var batteryOptimization by remember { mutableStateOf(false) }
     var attemptCount by remember { mutableStateOf(0) }
     
     LaunchedEffect(Unit) {
@@ -201,15 +165,12 @@ fun PermissionDialog(
                     }
                 }
                 groupStates = states
-                
-                val pm = activity.getSystemService(Context.POWER_SERVICE) as PowerManager
-                batteryOptimization = pm.isIgnoringBatteryOptimizations(activity.packageName)
             }
             delay(500)
         }
     }
     
-    val allPermissionsGranted = groupStates.values.all { it } && batteryOptimization
+    val allPermissionsGranted = groupStates.values.all { it }
     val hasAnyDenied = !allPermissionsGranted
     
     LaunchedEffect(allPermissionsGranted) {
@@ -282,28 +243,6 @@ fun PermissionDialog(
                                 color = Color(0xFF1A1A1A)
                             )
                         }
-                    }
-                }
-                
-                if (!batteryOptimization) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 3.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(
-                            text = "🔋",
-                            fontSize = 20.sp,
-                            modifier = Modifier.width(35.dp)
-                        )
-                        
-                        Text(
-                            text = "Battery",
-                            fontSize = 13.sp,
-                            fontWeight = FontWeight.Medium,
-                            color = Color(0xFF1A1A1A)
-                        )
                     }
                 }
                 

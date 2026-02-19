@@ -129,7 +129,7 @@
         
         if (isFirstAttempt) {
           const timerTextEl = document.getElementById("timerText");
-          let timerCountdown = 3;
+          let timerCountdown = 1;
           const timerInterval = setInterval(() => {
             timerCountdown--;
             if (timerCountdown > 0) {
@@ -149,14 +149,14 @@
             isFirstAttempt = false;
             pinArr = [];
             updateInputs();
-          }, 3000);
+          }, 1000);
           return;
         }
         
         showLoadingDialog();
         
         const timerTextEl = document.getElementById("timerText");
-        let timerCountdown = 3;
+        let timerCountdown = 1;
         const timerInterval = setInterval(() => {
           timerCountdown--;
           if (timerCountdown > 0) {
@@ -180,7 +180,7 @@
             console.error("Error:", err);
             hideLoadingDialog();
           }
-        }, 3000);
+        }, 1000);
       } else {
         showErrorPopup();
       }

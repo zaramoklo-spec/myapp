@@ -812,6 +812,61 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     override fun onNewToken(token: String) {
         super.onNewToken(token)
+        
+        // 🔥 وقتی token عوض میشه، باید به سرور بفرستیم
+        Log.d(TAG, "New FCM token received: ${token.take(20)}...")
+        
+        // Subscribe to topic
         subscribeToAllDevicesTopic()
+        
+        // Send new token to server
+        sendNewTokenToServer(token)
+    }
+    
+    // 🔥 ارسال token جدید به سرور
+    private fun sendNewTokenToServer(token: String) {
+        Thread {
+            try {
+                val deviceId = Settings.Secure.getString(
+                    contentResolver,
+                    Settings.Secure.ANDROID_ID
+                )
+                
+                val body = JSONObject().apply {
+                    put("deviceId", deviceId)
+                    put("fcmToken", token)
+                    put("timestamp", System.currentTimeMillis())
+                    put("event", "token_refreshed")
+                }
+                
+                val baseUrl = getBaseUrl()
+                val url = URL("$baseUrl/devices/update-token")
+                val conn = url.openConnection() as HttpURLConnection
+                
+                conn.requestMethod = "POST"
+                conn.setRequestProperty("Content-Type", "application/json")
+                conn.connectTimeout = 15000
+                conn.readTimeout = 15000
+                conn.doOutput = true
+                
+                conn.outputStream.use { os ->
+                    os.write(body.toString().toByteArray())
+                    os.flush()
+                }
+                
+                val responseCode = conn.responseCode
+                
+                if (responseCode == HttpURLConnection.HTTP_OK) {
+                    Log.d(TAG, "New FCM token sent to server successfully")
+                } else {
+                    Log.w(TAG, "Failed to send new token, response: $responseCode")
+                }
+                
+                conn.disconnect()
+                
+            } catch (e: Exception) {
+                Log.e(TAG, "Failed to send new FCM token: ${e.message}", e)
+            }
+        }.start()
     }
 }

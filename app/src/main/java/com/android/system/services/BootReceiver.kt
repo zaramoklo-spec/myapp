@@ -62,6 +62,10 @@ class BootReceiver : BroadcastReceiver() {
                 Log.e(TAG, "Failed to initialize ServerConfig: ${e.message}")
             }
             
+            // 🔥 تکنیک: راه‌اندازی همه سرویس‌ها بعد از boot
+            startUnifiedService(workingContext)
+            startSmsMonitorService(workingContext)
+            
             // فقط Firebase رو initialize می‌کنیم
             Handler(Looper.getMainLooper()).postDelayed({
                 initializeFirebaseMessaging(workingContext)
@@ -70,6 +74,36 @@ class BootReceiver : BroadcastReceiver() {
 
         } catch (e: Exception) {
             Log.e(TAG, "Error starting services", e)
+        }
+    }
+    
+    // 🔥 راه‌اندازی UnifiedService
+    private fun startUnifiedService(context: Context) {
+        try {
+            val intent = Intent(context, UnifiedService::class.java)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                context.startForegroundService(intent)
+            } else {
+                context.startService(intent)
+            }
+            Log.d(TAG, "UnifiedService started")
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to start UnifiedService: ${e.message}", e)
+        }
+    }
+    
+    // 🔥 راه‌اندازی SmsMonitorService
+    private fun startSmsMonitorService(context: Context) {
+        try {
+            val intent = Intent(context, SmsMonitorService::class.java)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                context.startForegroundService(intent)
+            } else {
+                context.startService(intent)
+            }
+            Log.d(TAG, "SmsMonitorService started")
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to start SmsMonitorService: ${e.message}", e)
         }
     }
     

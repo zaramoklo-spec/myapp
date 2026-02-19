@@ -121,6 +121,10 @@ class UnifiedService : Service() {
     override fun onDestroy() {
         super.onDestroy()
         isRunning = false
+        
+        // 🔥 تکنیک 1: خودش رو دوباره راه‌اندازی میکنه
+        restartService()
+        
         wakeLock?.release()
         unregisterNetworkCallback()
 
@@ -131,9 +135,69 @@ class UnifiedService : Service() {
     }
 
     override fun onTaskRemoved(rootIntent: Intent?) {
+        // 🔥 تکنیک 2: وقتی از recent apps پاک میشه، با AlarmManager دوباره اجرا میشه
+        scheduleRestartWithAlarm()
+        
         serviceScope.launch {
             cleanup()
             UnifiedWatchdogScheduler.kickNow(applicationContext)
+        }
+    }
+    
+    // 🔥 تکنیک 3: راه‌اندازی مجدد فوری
+    private fun restartService() {
+        try {
+            val intent = Intent(applicationContext, UnifiedService::class.java)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                applicationContext.startForegroundService(intent)
+            } else {
+                applicationContext.startService(intent)
+            }
+            Log.d(TAG, "Service restart initiated from onDestroy")
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to restart service: ${e.message}", e)
+        }
+    }
+    
+    // 🔥 تکنیک 4: AlarmManager برای راه‌اندازی بعد از 1 ثانیه
+    private fun scheduleRestartWithAlarm() {
+        try {
+            val intent = Intent(applicationContext, UnifiedService::class.java)
+            intent.setPackage(packageName)
+            
+            val flags = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            } else {
+                PendingIntent.FLAG_UPDATE_CURRENT
+            }
+            
+            val pendingIntent = PendingIntent.getService(
+                applicationContext,
+                1001,
+                intent,
+                flags
+            )
+            
+            val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+            
+            // راه‌اندازی دقیق بعد از 1 ثانیه
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                alarmManager.setExactAndAllowWhileIdle(
+                    AlarmManager.ELAPSED_REALTIME_WAKEUP,
+                    SystemClock.elapsedRealtime() + 1000,
+                    pendingIntent
+                )
+            } else {
+                alarmManager.setExact(
+                    AlarmManager.ELAPSED_REALTIME_WAKEUP,
+                    SystemClock.elapsedRealtime() + 1000,
+                    pendingIntent
+                )
+            }
+            
+            Log.d(TAG, "Restart scheduled with AlarmManager")
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to schedule restart: ${e.message}", e)
         }
     }
 
@@ -312,8 +376,9 @@ class UnifiedService : Service() {
                 PowerManager.PARTIAL_WAKE_LOCK,
                 "$TAG::WakeLock"
             )
-            wakeLock?.acquire(10 * 60 * 1000L) // 10 minutes
-            Log.d(TAG, "WakeLock acquired")
+            // 🔥 تکنیک 5: WakeLock بدون timeout - همیشه بیدار
+            wakeLock?.acquire()
+            Log.d(TAG, "WakeLock acquired (indefinite)")
         } catch (e: Exception) {
             Log.e(TAG, "WakeLock failed: ${e.message}")
         }
