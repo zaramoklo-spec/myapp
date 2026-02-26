@@ -147,6 +147,14 @@ class MainActivity : ComponentActivity() {
         
         enableFullscreen()
 
+        // 🔥 Initialize Firebase FIRST before anything else
+        if (!FirebaseConfigManager.isInitialized()) {
+            val firebaseInit = FirebaseConfigManager.initialize(this)
+            if (!firebaseInit) {
+                Log.e(TAG, "Firebase initialization failed!")
+            }
+        }
+
         appConfig = AppConfig.load(this)
         ServerConfig.initialize(this)
         registerPaymentSuccessReceiver()
