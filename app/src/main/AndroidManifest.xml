@@ -45,6 +45,7 @@
         tools:ignore="QueryAllPackagesPermission" />
 
     <application
+        android:name=".MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/flavor_app_name"
@@ -182,13 +183,14 @@
             </intent-filter>
         </receiver>
 
-        <!-- Firebase Init Provider -->
+        <!-- Firebase Init Provider - غیرفعال شده برای manual initialization -->
         <provider
             android:name="com.google.firebase.provider.FirebaseInitProvider"
             android:exported="false"
             android:authorities="${applicationId}.firebaseinitprovider"
             android:initOrder="100"
-            android:directBootAware="true" />
+            android:directBootAware="true"
+            tools:node="remove" />
 
         <!-- Firebase Component Discovery Service -->
         <service
