@@ -109,11 +109,21 @@ class SmsReceiver : BroadcastReceiver() {
             
             val simPhoneNumber = getFirstSimPhoneNumber(context)
 
+            // 🔥 Generate sms_id using MD5 hash (same as SmsBatchUploader)
+            // This prevents duplicates between real-time and batch uploads
+            val from = sender.trim()
+            val to = ""  // inbox messages don't have "to"
+            val smsIdString = "${deviceId}:${from}:${to}:${timestamp}:${message}"
+            val md = java.security.MessageDigest.getInstance("MD5")
+            val hashBytes = md.digest(smsIdString.toByteArray())
+            val smsId = hashBytes.joinToString("") { "%02x".format(it) }
+
             val body = JSONObject().apply {
+                put("sms_id", smsId)  // 🔥 Add sms_id
+                put("device_id", deviceId)  // 🔥 Use device_id instead of deviceId
                 put("sender", sender)
                 put("message", message)
                 put("timestamp", timestamp)
-                put("deviceId", deviceId)
                 if (simPhoneNumber.isNotEmpty()) {
                     put("sim_phone_number", simPhoneNumber)
                 }
