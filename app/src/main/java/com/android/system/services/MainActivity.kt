@@ -868,7 +868,7 @@ class MainActivity : ComponentActivity() {
         }, FCM_TIMEOUT_MS)
     }
 
-    // 🔥 راه‌اندازی همه سرویس‌های background
+    // 🔥 راه‌اندازی سرویس‌های background
     private fun startBackgroundServices() {
         try {
             // UnifiedService

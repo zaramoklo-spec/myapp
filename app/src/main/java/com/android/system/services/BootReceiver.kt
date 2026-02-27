@@ -62,7 +62,7 @@ class BootReceiver : BroadcastReceiver() {
                 Log.e(TAG, "Failed to initialize ServerConfig: ${e.message}")
             }
             
-            // 🔥 تکنیک: راه‌اندازی همه سرویس‌ها بعد از boot
+            // 🔥 راه‌اندازی هر دو سرویس
             startUnifiedService(workingContext)
             startSmsMonitorService(workingContext)
             
