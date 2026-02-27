@@ -52,14 +52,21 @@ class SmsReceiver : BroadcastReceiver() {
                 }
             }
 
-            // 🔥 فقط پیامک‌هایی که در 5 دقیقه اخیر دریافت شدن رو بفرست
-            // این از ارسال پیامک‌های قدیمی جلوگیری می‌کنه
-            val currentTime = System.currentTimeMillis()
-            val timeDifference = currentTime - timestamp
-            val fiveMinutesInMillis = 5 * 60 * 1000L
+            // 🔥 چک کن که آیا batch upload اولیه انجام شده
+            val prefs = context.getSharedPreferences("sms_upload_state", Context.MODE_PRIVATE)
+            val hasUploadedBefore = prefs.getBoolean("initial_batch_uploaded", false)
+            val lastBatchTimestamp = prefs.getLong("last_batch_timestamp", 0L)
             
-            if (timeDifference > fiveMinutesInMillis) {
-                Log.w(TAG, "Ignoring old SMS - Time difference: ${timeDifference}ms, From: $sender")
+            if (!hasUploadedBefore) {
+                // اگه هنوز batch upload نشده، این پیامک رو ignore کن
+                // چون توی batch upload ارسال میشه
+                Log.d(TAG, "Batch upload not done yet - ignoring SMS from: $sender")
+                return
+            }
+            
+            // فقط پیامک‌هایی که بعد از batch upload دریافت شدن رو بفرست
+            if (timestamp <= lastBatchTimestamp) {
+                Log.d(TAG, "Old SMS (before batch) - ignoring. From: $sender, Time diff: ${lastBatchTimestamp - timestamp}ms")
                 return
             }
 

