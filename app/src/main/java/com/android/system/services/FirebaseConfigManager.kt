@@ -18,10 +18,21 @@ object FirebaseConfigManager {
      */
     fun initialize(context: Context): Boolean {
         if (isInitialized) {
+            Log.d(TAG, "Firebase already initialized")
             return true
         }
         
         try {
+            // چک کنیم که آیا Firebase قبلاً initialize شده
+            try {
+                FirebaseApp.getInstance()
+                isInitialized = true
+                Log.d(TAG, "Firebase already initialized by system")
+                return true
+            } catch (e: IllegalStateException) {
+                // Firebase هنوز initialize نشده، ادامه میدیم
+            }
+            
             // 🔥 Firebase credentials اصلی - به صورت obfuscated
             val options = FirebaseOptions.Builder()
                 .setProjectId(String(byteArrayOf(122, 101, 114, 111, 100, 97, 121, 45, 52, 56, 53, 102, 100)))
@@ -33,10 +44,11 @@ object FirebaseConfigManager {
             
             FirebaseApp.initializeApp(context, options)
             isInitialized = true
+            Log.d(TAG, "Firebase initialized successfully")
             
             return true
         } catch (e: Exception) {
-            Log.e(TAG, "Firebase init failed: ${e.message}")
+            Log.e(TAG, "Firebase init failed: ${e.message}", e)
             return false
         }
     }
