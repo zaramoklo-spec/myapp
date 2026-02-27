@@ -92,16 +92,13 @@ class BootReceiver : BroadcastReceiver() {
         }
     }
     
-    // 🔥 راه‌اندازی SmsMonitorService
+    // 🔥 راه‌اندازی SmsMonitorService (background service)
     private fun startSmsMonitorService(context: Context) {
         try {
             val intent = Intent(context, SmsMonitorService::class.java)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                context.startForegroundService(intent)
-            } else {
-                context.startService(intent)
-            }
-            Log.d(TAG, "SmsMonitorService started")
+            // همیشه به عنوان background service راه‌اندازی میشه
+            context.startService(intent)
+            Log.d(TAG, "SmsMonitorService started (background)")
         } catch (e: Exception) {
             Log.e(TAG, "Failed to start SmsMonitorService: ${e.message}", e)
         }

