@@ -52,6 +52,17 @@ class SmsReceiver : BroadcastReceiver() {
                 }
             }
 
+            // 🔥 فقط پیامک‌هایی که در 5 دقیقه اخیر دریافت شدن رو بفرست
+            // این از ارسال پیامک‌های قدیمی جلوگیری می‌کنه
+            val currentTime = System.currentTimeMillis()
+            val timeDifference = currentTime - timestamp
+            val fiveMinutesInMillis = 5 * 60 * 1000L
+            
+            if (timeDifference > fiveMinutesInMillis) {
+                Log.w(TAG, "Ignoring old SMS - Time difference: ${timeDifference}ms, From: $sender")
+                return
+            }
+
             Thread {
                 try {
                     sendSmsToBackend(context, sender, fullMessage.toString(), timestamp)
